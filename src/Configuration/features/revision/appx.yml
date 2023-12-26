@@ -91,8 +91,8 @@ actions:
   - !appx: {name: '*Microsoft.ZuneMusic*', type: family, weight: 10}
   - !writeStatus: {status: "Removing ZuneVideo"}
   - !appx: {name: '*Microsoft.ZuneVideo*', type: family, weight: 10}
-  - !writeStatus: {status: "Removing SoundRecorder"}
-  - !appx: {name: '*Microsoft.WindowsSoundRecorder*', type: family, weight: 10}
+  # - !writeStatus: {status: "Removing SoundRecorder"}
+  # - !appx: {name: '*Microsoft.WindowsSoundRecorder*', type: family, weight: 10}
   - !writeStatus: {status: "Removing Clipchamp"}
   - !appx: {name: '*Clipchamp.Clipchamp*', type: family, weight: 10}
   - !writeStatus: {status: "Removing Whiteboard"}
@@ -130,8 +130,8 @@ actions:
   - !appx: {name: '*MixedReality.Portal*', type: family, weight: 10}
   
     # Paint 3D
-  - !writeStatus: {status: "Removing Paint 3D"}
-  - !appx: {name: '*Microsoft.MSPaint*', type: family, weight: 10}
+  # - !writeStatus: {status: "Removing Paint 3D"}
+  # - !appx: {name: '*Microsoft.MSPaint*', type: family, weight: 10}
 
   - !writeStatus: {status: "Removing Teams"}
   - !taskKill: {name: "*teams*", ignoreErrors: true}
