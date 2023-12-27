@@ -23,13 +23,15 @@ function Update-Feature {
 $features = @(
     @{ Name = "DirectPlay"; Bool = $true },
     @{ Name = "LegacyComponents"; Bool = $true },
-    @{ Name = "MicrosoftWindowsPowerShellV2"; Bool = $false },
-    @{ Name = "MicrosoftWindowsPowerShellV2Root"; Bool = $false },
-    @{ Name = "MSRDC-Infrastructure"; Bool = $false },
-    @{ Name = "Printing-Foundation-Features"; Bool = $false },
-    @{ Name = "Printing-Foundation-InternetPrinting-Client"; Bool = $false },
-    @{ Name = "WorkFolders-Client"; Bool = $false }
-	# @{ Name = "SmbDirect"; Bool = $false }
+    @{ Name = "MicrosoftWindowsPowerShellV2"; Bool = $true },
+    @{ Name = "MicrosoftWindowsPowerShellV2Root"; Bool = $true },
+    @{ Name = "MSRDC-Infrastructure"; Bool = $true },
+    @{ Name = "Printing-Foundation-Features"; Bool = $true },
+    @{ Name = "Printing-Foundation-InternetPrinting-Client"; Bool = $true },
+    @{ Name = "Printing-XPSServices-Features"; Bool = $true },
+    @{ Name = "Printing-PrintToPDFServices-Features"; Bool = $true },
+    @{ Name = "WorkFolders-Client"; Bool = $true }
+	@{ Name = "SmbDirect"; Bool = $true }
 )
 foreach ($feature in $features) {
     Update-Feature -featureName $feature.Name -bool $feature.Bool
