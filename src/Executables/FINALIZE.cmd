@@ -32,7 +32,8 @@ rmdir /s /q "%ProgramFiles(x86)%\WindowsInstallationAssistant" >NUL 2>nul
 @REM PowerShell -NonInteractive -NoLogo -NoP -C "Get-CimInstance -Namespace "Root\cimv2\mdm\dmmap" -ClassName "MDM_EnterpriseModernAppManagement_AppManagement01" | Invoke-CimMethod -MethodName UpdateScanMethod" >NUL 2>nul
 
 echo Configuring power settings
-powercfg /hibernate off >NUL 2>nul
+powercfg /hibernate on
+powercfg /hibernate /type full
 powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 >NUL 2>nul
 powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 3ff9831b-6f80-4830-8178-736cd4229e7b >NUL 2>nul
 powercfg -changename 3ff9831b-6f80-4830-8178-736cd4229e7b "Revision - Ultra Performance" "Windows's Ultimate Performance with additional changes." >NUL 2>nul
