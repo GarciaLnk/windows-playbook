@@ -25,4 +25,5 @@ jobs:
           file: ventoy-config.zip
           asset_name: ventoy-config.zip
           tag: ${{ github.ref }}-ventoy-config
+          release_name: Ventoy Config
           overwrite: true
