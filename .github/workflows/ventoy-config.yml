@@ -1,6 +1,7 @@
 name: Archive and Release Ventoy Config
 
 on:
+  workflow_dispatch:
   release:
     types:
       - created
