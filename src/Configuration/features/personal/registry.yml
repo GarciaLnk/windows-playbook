@@ -1,0 +1,59 @@
+---
+title: Registry (personal)
+description: Personal registry configuration
+privilege: TrustedInstaller
+actions:
+  - !writeStatus: {status: 'Tweaking registry'}
+
+    # ======> Taskbar
+    # === Never combine taskbar buttons - On
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'TaskbarGlomLevel', type: REG_DWORD, data: '2'}
+    # === Small taskbar buttons - On
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'TaskbarSi', type: REG_DWORD, data: '0'}
+
+    # ======> File associations
+  - !registryValue: {path: 'HKCU\Software\Classes\.ps1', value: '', type: REG_SZ, data: 'Microsoft.PowerShellScript.1'}
+    # === Firefox
+  - !registryValue: {path: 'HKCU\Software\Classes\https', value: '', type: REG_SZ, data: 'FirefoxURL-308046B0AF4A39CB', option: 'browser-firefox'}
+  - !registryValue: {path: 'HKCU\Software\Classes\http', value: '', type: REG_SZ, data: 'FirefoxURL-308046B0AF4A39CB', option: 'browser-firefox'}
+  - !registryValue: {path: 'HKCU\Software\Classes\.htm', value: '', type: REG_SZ, data: 'FirefoxURL-308046B0AF4A39CB', option: 'browser-firefox'}
+  - !registryValue: {path: 'HKCU\Software\Classes\.html', value: '', type: REG_SZ, data: 'FirefoxURL-308046B0AF4A39CB', option: 'browser-firefox'}
+  - !registryValue: {path: 'HKCU\Software\Classes\.shtml', value: '', type: REG_SZ, data: 'FirefoxURL-308046B0AF4A39CB', option: 'browser-firefox'}
+    # === Brave
+  - !registryValue: {path: 'HKCU\Software\Classes\https', value: '', type: REG_SZ, data: 'BraveHTML', option: 'browser-brave'}
+  - !registryValue: {path: 'HKCU\Software\Classes\http', value: '', type: REG_SZ, data: 'BraveHTML', option: 'browser-brave'}
+  - !registryValue: {path: 'HKCU\Software\Classes\.htm', value: '', type: REG_SZ, data: 'BraveHTML', option: 'browser-brave'}
+  - !registryValue: {path: 'HKCU\Software\Classes\.html', value: '', type: REG_SZ, data: 'BraveHTML', option: 'browser-brave'}
+  - !registryValue: {path: 'HKCU\Software\Classes\.shtml', value: '', type: REG_SZ, data: 'BraveHTML', option: 'browser-brave'}
+
+    # ======> Explorer
+    # === Compact mode - On
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'UseCompactMode', type: REG_DWORD, data: '1'}
+    # === Disable Gallery - On
+  - !registryValue: {path: 'HKCU\Software\Classes\CLSID\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}', value: 'System.IsPinnedToNameSpaceTree', type: REG_DWORD, data: '0'}
+    # === Disable Shortcut Text - On
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates', value: 'ShortcutNameTemplate', type: REG_SZ, data: '"%s.lnk"'}
+    # === Disable News and Interests - On
+  - !registryValue: {path: 'HKCU\Software\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests', value: 'value', type: REG_DWORD, data: '0'}
+
+    # ======> Security
+    # === UAC
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorAdmin', type: REG_DWORD, data: '5'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorUser', type: REG_DWORD, data: '3'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableInstallerDetection', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableLUA', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableVirtualization', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'PromptOnSecureDesktop', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ValidateAdminCodeSignatures', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'FilterAdministratorToken', type: REG_DWORD, data: '0'}
+
+    # Enable Admin account and downgrade user account
+  - !run:
+    exeDir: true
+    exe: 'ADMIN.bat'
+
+    # ======> Extra
+    # === Disable MPO - On
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\Dwm', value: 'OverlayTestMode', type: REG_DWORD, data: '5'}
+    # === Set Central Europe Time - On
+  - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\TimeZoneInformation', value: 'TimeZoneKeyName', type: REG_SZ, data: 'Romance Standard Time'}

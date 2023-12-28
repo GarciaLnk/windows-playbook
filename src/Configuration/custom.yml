@@ -13,3 +13,5 @@ features:
 - features\revision\registry.yml
 - features\revision\revert.yml
 - features\revision\config.yml
+- features\personal\software.yml
+- features\personal\registry.yml
