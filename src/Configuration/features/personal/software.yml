@@ -1,0 +1,422 @@
+title: Software (personal)
+description: Installs preferred personal software
+privilege: TrustedInstaller
+actions:
+  - !writeStatus: {status: 'Installing Scoop'}
+  - !powerShell: {command: 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; iex "& {$(irm get.scoop.sh)} -RunAsAdmin"'}
+  - !cmd: {command: 'scoop bucket add main'}
+  - !cmd: {command: 'scoop bucket add games'}
+  - !cmd: {command: 'scoop bucket add extras'}
+
+  - !writeStatus: {status: 'Configuring Choco'}
+  - !cmd:
+    command: 'choco feature enable -n=useRememberedArgumentsForUpgrades'
+    weight: 20
+
+  - !writeStatus: {status: 'Installing WinGet'}
+  - !powerShell: {command: 'irm asheroto.com/winget | iex'}
+
+  - !writeStatus: {status: 'Resetting MS Store'}
+  - !powerShell: {command: 'wsreset'}
+  - !powerShell: {command: 'Get-CimInstance -Namespace "Root\cimv2\mdm\dmmap" -ClassName "MDM_EnterpriseModernAppManagement_AppManagement01" | Invoke-CimMethod -MethodName UpdateScanMethod'}
+
+  - !writeStatus: {status: 'Installing Visual C++ Runtime'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums vcredist-all'
+    weight: 150
+
+  - !writeStatus: {status: 'Installing legacy DirectX Runtime'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums directx'
+    weight: 150
+
+  - !writeStatus: {status: 'Installing .NET Runtimes'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName NetFx3 -NoRestart -All'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums dotnet-5.0-runtime dotnet-6.0-runtime dotnet-7.0-runtime dotnet-8.0-runtime'
+    weight: 300
+
+  - !writeStatus: {status: 'Installing MSKLC'}
+  - !cmd:
+    command: 'scoop install extras/msklc'
+    weight: 150
+
+  - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums microsoft-office-deployment --params="/64bit /ProofingToolLanguage:en-us,es-es /Exclude:Publisher,OneDrive,Outlook,OneNote,Lync,Groove"'
+    weight: 150
+    option: 'install-office'
+
+  - !writeStatus: {status: 'Installing Visual Studio', option: 'install-visual-studio'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums visualstudio2022enterprise --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended;includeOptional"'
+    weight: 150
+    option: 'install-visual-studio'
+
+  - !writeStatus: {status: 'Installing Visual Studio Code', option: 'install-vscode'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums vscode --params "/NoDesktopIcon"'
+    weight: 150
+    option: 'install-vscode'
+
+  - !writeStatus: {status: 'Installing PowerToys', option: 'install-powertoys'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums powertoys'
+    weight: 150
+    option: 'install-powertoys'
+
+  - !writeStatus: {status: 'Installing QEMU guest tools', option: 'install-guest-tools'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums qemu-guest-agent'
+    weight: 75
+    option: 'install-guest-tools'
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums spice-agent'
+    weight: 75
+    option: 'install-guest-tools'
+
+  - !writeStatus: {status: 'Installing Adobe Reader DC', option: 'install-adobereader'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums adobereader'
+    weight: 150
+    option: 'install-adobereader'
+
+  - !writeStatus: {status: 'Installing KDE Connect', option: 'install-kdeconnect'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums kdeconnect-kde'
+    weight: 150
+    option: 'install-kdeconnect'
+
+  - !writeStatus: {status: 'Installing Equalizer APO', option: 'install-eqapo'}
+  - !cmd: {command: 'scoop bucket add nonportable'}
+  - !cmd:
+    command: 'scoop install nonportable/equalizer-apo-np'
+    weight: 150
+    option: 'install-eqapo'
+
+  - !writeStatus: {status: 'Installing Cloudflare Warp', option: 'install-warp'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums warp'
+    weight: 150
+    option: 'install-warp'
+
+  - !writeStatus: {status: 'Installing Tailscale', option: 'install-tailscale'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums tailscale'
+    weight: 150
+    option: 'install-tailscale'
+
+  - !writeStatus: {status: 'Installing qBittorrent', option: 'install-qbittorrent'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums qbittorrent'
+    weight: 150
+    option: 'install-qbittorrent'
+
+  - !writeStatus: {status: 'Installing Parsec', option: 'install-parsec'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums parsec'
+    weight: 150
+    option: 'install-parsec'
+
+  - !writeStatus: {status: 'Installing Python', option: 'install-python'}
+  - !cmd:
+    command: 'scoop install main/python'
+    weight: 150
+    option: 'install-python'
+
+  - !writeStatus: {status: 'Installing Node.js', option: 'install-nodejs'}
+  - !cmd:
+    command: 'scoop install main/nodejs'
+    weight: 150
+    option: 'install-nodejs'
+
+  - !writeStatus: {status: 'Installing Java JDK', option: 'install-java'}
+  - !cmd: {command: 'scoop bucket add java'}
+  - !cmd:
+    command: 'scoop install java/graalvm21-jdk21'
+    weight: 150
+    option: 'install-java'
+
+  - !writeStatus: {status: 'Installing Git', option: 'install-git'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums git.install --params "/GitAndUnixToolsOnPath /WindowsTerminal /NoAutoCrlf"'
+    weight: 150
+    option: 'install-git'
+
+  - !writeStatus: {status: 'Installing Yuzu', option: 'install-yuzu'}
+  - !cmd:
+    command: 'scoop install games/yuzu-pineapple'
+    weight: 150
+    option: 'install-yuzu'
+
+  - !writeStatus: {status: 'Installing Cemu', option: 'install-cemu'}
+  - !cmd:
+    command: 'scoop install games/cemu-dev'
+    weight: 150
+    option: 'install-cemu'
+
+  - !writeStatus: {status: 'Installing Citra', option: 'install-citra'}
+  - !cmd:
+    command: 'scoop install games/citra'
+    weight: 150
+    option: 'install-citra'
+
+  - !writeStatus: {status: 'Installing Dolphin', option: 'install-dolphin'}
+  - !cmd:
+    command: 'scoop install games/dolphin-beta'
+    weight: 150
+    option: 'install-dolphin'
+
+  - !writeStatus: {status: 'Installing Steam', option: 'install-steam'}
+  - !cmd:
+    command: 'scoop install games/steam'
+    weight: 150
+    option: 'install-steam'
+
+  - !writeStatus: {status: 'Installing Epic Games Launcher', option: 'install-epicgames'}
+  - !cmd:
+    command: 'scoop install games/epic-games-launcher'
+    weight: 150
+    option: 'install-epicgames'
+
+  - !writeStatus: {status: 'Installing GOG Galaxy', option: 'install-gog'}
+  - !cmd:
+    command: 'scoop install games/goggalaxy'
+    weight: 150
+    option: 'install-gog'
+
+  - !writeStatus: {status: 'Installing Battle.net', option: 'install-battlenet'}
+  - !cmd:
+    command: 'scoop install games/battlenet'
+    weight: 150
+    option: 'install-battlenet'
+
+  - !writeStatus: {status: 'Installing EA app', option: 'install-ea'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums ea-app'
+    weight: 150
+    option: 'install-ea'
+
+  - !writeStatus: {status: 'Installing Ubisoft Connect', option: 'install-ubisoft'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums ubisoft-connect'
+    weight: 150
+    option: 'install-ubisoft'
+
+  - !writeStatus: {status: 'Installing Prism Launcher', option: 'install-prism'}
+  - !cmd:
+    command: 'scoop install games/prismlauncher'
+    weight: 150
+    option: 'install-prism'
+
+  - !writeStatus: {status: 'Installing PokeMMO', option: 'install-pokemmo'}
+  - !cmd:
+    command: 'winget install --id=PokeMMO.PokeMMO -eh'
+    weight: 150
+    option: 'install-pokemmo'
+
+  - !writeStatus: {status: 'Installing Discord', option: 'install-discord'}
+  - !cmd:
+    command: 'scoop install extras/discord'
+    weight: 150
+    option: 'install-discord'
+
+  - !writeStatus: {status: 'Installing Zoom', option: 'install-zoom'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums zoom --params="/NoDesktopShortcut"'
+    weight: 150
+    option: 'install-zoom'
+
+  - !writeStatus: {status: 'Installing Teams', option: 'install-teams'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums microsoft-teams'
+    weight: 150
+    option: 'install-teams'
+
+  - !writeStatus: {status: 'Installing OBS', option: 'install-obs'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums obs-studio.install'
+    weight: 150
+    option: 'install-obs'
+
+  - !writeStatus: {status: 'Installing HWiNFO', option: 'install-hwinfo'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums hwinfo.install'
+    weight: 150
+    option: 'install-hwinfo'
+
+  - !writeStatus: {status: 'Installing Furmark', option: 'install-furmark'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums furmark'
+    weight: 150
+    option: 'install-furmark'
+
+  - !writeStatus: {status: 'Installing Cinebench', option: 'install-cinebench'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums cinebench'
+    weight: 150
+    option: 'install-cinebench'
+
+  - !writeStatus: {status: 'Installing LatencyMon', option: 'install-latencymon'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums latencymon'
+    weight: 150
+    option: 'install-latencymon'
+
+  - !writeStatus: {status: 'Installing ShareX', option: 'install-sharex'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums sharex'
+    weight: 150
+    option: 'install-sharex'
+
+  - !writeStatus: {status: 'Installing Meld', option: 'install-meld'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums meld'
+    weight: 150
+    option: 'install-meld'
+
+  - !writeStatus: {status: 'Installing HxD', option: 'install-hxd'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums hxd'
+    weight: 150
+    option: 'install-hxd'
+
+  - !writeStatus: {status: 'Installing Everything', option: 'install-everything'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums everything'
+    weight: 150
+    option: 'install-everything'
+
+  - !writeStatus: {status: 'Installing Pympress', option: 'install-pympress'}
+  - !cmd:
+    command: 'winget install --id=Cimbali.pympress -eh'
+    weight: 150
+    option: 'install-pympress'
+
+  - !writeStatus: {status: 'Installing Fedora Media Writer', option: 'install-fedorawriter'}
+  - !cmd:
+    command: 'winget install --id=Fedora.FedoraMediaWriter -eh'
+    weight: 150
+    option: 'install-fedorawriter'
+
+  - !writeStatus: {status: 'Installing Fedora Butane', option: 'install-fedorabutane'}
+  - !cmd:
+    command: 'winget install --id=Fedora.CoreOS.butane -eh'
+    weight: 150
+    option: 'install-fedorabutane'
+
+  - !writeStatus: {status: 'Installing WizTree', option: 'install-wiztree'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums wiztree'
+    weight: 150
+    option: 'install-wiztree'
+
+  - !writeStatus: {status: 'Installing NVIDIA graphics drivers', option: 'install-nvidia'}
+  - !cmd:
+    command: 'scoop install extras/nvcleanstall'
+    weight: 150
+    option: 'install-nvidia'
+
+  - !writeStatus: {status: 'Installing AMD Ryzen drivers', option: 'install-ryzen'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums amd-ryzen-chipset'
+    weight: 150
+    option: 'install-ryzen'
+
+  - !writeStatus: {status: 'Installing Intel wireless drivers', option: 'install-intelwireless'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums intel-proset-drivers'
+    weight: 75
+    option: 'install-intelwireless'
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums intel-bluetooth-drivers'
+    weight: 75
+    option: 'install-intelwireless'
+
+  - !writeStatus: {status: 'Installing Snappy Driver Installer Origin', option: 'install-sdio'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums sdio'
+    weight: 150
+    option: 'install-sdio'
+
+  - !writeStatus: {status: 'Installing Razer Synapse', option: 'install-synapse'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums razer-synapse-3'
+    weight: 150
+    option: 'install-synapse'
+
+  - !writeStatus: {status: 'Installing MSI Afterburner', option: 'install-afterburner'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums msiafterburner'
+    weight: 150
+    option: 'install-afterburner'
+
+  - !writeStatus: {status: 'Installing Universal x86 Tuning Utility', option: 'install-uxtu'}
+  - !run:
+    exeDir: true
+    exe: 'PowerShell'
+    args: '-NoP -ExecutionPolicy Bypass -File UXTU.ps1'
+    weight: 150
+    option: 'install-uxtu'
+
+  - !writeStatus: {status: 'Installing Realtek PCIe Ethernet driver', option: 'install-realtekethernet'}
+  - !run:
+    exeDir: true
+    exe: 'RealtekPCIeEthernetDriver.exe'
+    args: '-s -SMS'
+    weight: 150
+    option: 'install-realtekethernet'
+
+  - !writeStatus: {status: 'Installing 7-Zip'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums 7zip.install'
+    weight: 150
+  - !writeStatus: {status: 'Configuring 7-Zip'}
+  - !run:
+    exeDir: true
+    exe: '7ZIP.cmd'
+    weight: 20
+
+  - !writeStatus: {status: 'Installing Notepad3'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums notepad3.install'
+    weight: 150
+  - !writeStatus: {status: 'Configuring Notepad3'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums  install notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
+    weight: 20
+
+  - !writeStatus: {status: 'Installing mpv'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums mpv.install'
+    weight: 150
+
+  - !writeStatus: {status: 'Installing WinFsp'}
+  - !cmd:
+    command: 'choco install -y --allow-empty-checksums winfsp'
+    weight: 150
+
+  - !writeStatus: {status: 'Enabling NFS client'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName ServicesForNFS-ClientOnly -NoRestart -All'}
+
+  - !writeStatus: {status: 'Enabling SSH client'}
+  - !powerShell: {command: 'Add-WindowsCapability -Online -Name OpenSSH.Client'}
+
+  - !writeStatus: {status: 'Enabling Windows Sandbox'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -NoRestart -All'}
+
+  - !writeStatus: {status: 'Enabling Virtual Machine Platform'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart -All'}
+
+  - !writeStatus: {status: 'Installing Windows Subsystem for Linux'}
+  - !powerShell: {command: 'wsl --install', weight: 150}
+
+  - !writeStatus: {status: 'Installing Windows Subsystem for Android'}
+  - !run:
+    exeDir: true
+    exe: 'PowerShell'
+    args: '-NoP -ExecutionPolicy Bypass -File WSA.ps1'
+    weight: 300
+  - !cmd:
+    command: 'scoop install extras/wsa-pacman'
+    weight: 150
