@@ -1,4 +1,4 @@
-# Revision Configuration for Ventoy
+# Custom Configuration for Ventoy
 
 This is a test repository for automating some parts of the Windows installation process using Ventoy Auto Install Plugin.
 
