@@ -1,0 +1,27 @@
+name: Archive and Release Ventoy Config
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Archive content
+        run: |
+          zip -r ventoy-config.zip ventoy-config/Setup ventoy-config/WinISO ventoy-config/ventoy
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload ZIP file
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: ventoy-config.zip
+          asset_name: ventoy-config.zip
+          tag: ${{ github.ref }}
+          overwrite: true
