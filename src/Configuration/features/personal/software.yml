@@ -3,10 +3,10 @@ description: Installs preferred personal software
 privilege: TrustedInstaller
 actions:
   - !writeStatus: {status: 'Installing Scoop'}
-  - !powerShell: {command: 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; iex "& {$(irm get.scoop.sh)} -RunAsAdmin"'}
-  - !cmd: {command: 'scoop bucket add main'}
-  - !cmd: {command: 'scoop bucket add games'}
-  - !cmd: {command: 'scoop bucket add extras'}
+  - !powerShell:
+    runas: currentUser
+    command: 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression'
+  - !cmd: {command: 'scoop bucket add main games extras', runas: currentUser}
 
   - !writeStatus: {status: 'Configuring Choco'}
   - !cmd:
@@ -14,7 +14,7 @@ actions:
     weight: 20
 
   - !writeStatus: {status: 'Installing WinGet'}
-  - !powerShell: {command: 'irm asheroto.com/winget | iex'}
+  - !powerShell: {command: 'irm asheroto.com/winget | iex', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Resetting MS Store'}
   - !powerShell: {command: 'wsreset'}
@@ -22,24 +22,37 @@ actions:
 
   - !writeStatus: {status: 'Installing Visual C++ Runtime'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums vcredist-all'
+    runas: currentUserElevated
+    command: 'winget install -e --id abbodi1406.vcredist --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing legacy DirectX Runtime'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums directx'
+    runas: currentUserElevated
+    command: 'winget install -e --id Microsoft.DirectX --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing .NET Runtimes'}
   - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName NetFx3 -NoRestart -All'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums dotnet-5.0-runtime dotnet-6.0-runtime dotnet-7.0-runtime dotnet-8.0-runtime'
+    runas: currentUserElevated
+    command: 'winget install Microsoft.DotNet.Runtime.5 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.Runtime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 300
 
   - !writeStatus: {status: 'Installing MSKLC'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install extras/msklc'
     weight: 150
+
+  - !writeStatus: {status: 'Installing Firefox', option: 'browser-firefox'}
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install -e --id Mozilla.Firefox --custom "/DesktopShortcut=false" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    weight: 150
+    option: 'browser-firefox'
+  - !writeStatus: {status: 'Configuring Firefox', option: 'browser-firefox'}
+  - !run: {exe: 'FIREFOX.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
 
   - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
   - !cmd:
@@ -49,29 +62,29 @@ actions:
 
   - !writeStatus: {status: 'Installing Visual Studio', option: 'install-visual-studio'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums visualstudio2022enterprise --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop;includeRecommended;includeOptional"'
+    runas: currentUserElevated
+    command: 'winget install -e --id Microsoft.VisualStudio.2022.Enterprise --custom "--add Microsoft.VisualStudio.Workload.NativeDesktop" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-visual-studio'
 
   - !writeStatus: {status: 'Installing Visual Studio Code', option: 'install-vscode'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums vscode --params "/NoDesktopIcon"'
+    runas: currentUserElevated
+    command: 'winget install -e --id Microsoft.VisualStudioCode --custom "!desktopicon" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-vscode'
 
   - !writeStatus: {status: 'Installing PowerToys', option: 'install-powertoys'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums powertoys'
+    runas: currentUserElevated
+    command: 'winget install -e --id Microsoft.PowerToys --custom "-silent" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-powertoys'
 
   - !writeStatus: {status: 'Installing QEMU guest tools', option: 'install-guest-tools'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums qemu-guest-agent'
-    weight: 75
-    option: 'install-guest-tools'
-  - !cmd:
-    command: 'choco install -y --allow-empty-checksums spice-agent'
+    runas: currentUserElevated
+    command: 'winget install SoftwareFreedomConservancy.QEMUGuestAgent Spice.VDAgent Spice.SpiceWebDAVd --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 75
     option: 'install-guest-tools'
 
@@ -83,165 +96,190 @@ actions:
 
   - !writeStatus: {status: 'Installing KDE Connect', option: 'install-kdeconnect'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums kdeconnect-kde'
+    runas: currentUserElevated
+    command: 'winget install -e --id KDE.KDEConnect --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-kdeconnect'
 
   - !writeStatus: {status: 'Installing Equalizer APO', option: 'install-eqapo'}
-  - !cmd: {command: 'scoop bucket add nonportable'}
   - !cmd:
-    command: 'scoop install nonportable/equalizer-apo-np'
+    runas: currentUser
+    command: 'scoop bucket add nonportable & scoop install nonportable/equalizer-apo-np'
     weight: 150
     option: 'install-eqapo'
 
   - !writeStatus: {status: 'Installing Cloudflare Warp', option: 'install-warp'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums warp'
+    runas: currentUserElevated
+    command: 'winget install -e --id Cloudflare.Warp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-warp'
 
   - !writeStatus: {status: 'Installing Tailscale', option: 'install-tailscale'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums tailscale'
+    runas: currentUserElevated
+    command: 'winget install -e --id Tailscale.Tailscale --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-tailscale'
 
   - !writeStatus: {status: 'Installing qBittorrent', option: 'install-qbittorrent'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums qbittorrent'
+    runas: currentUserElevated
+    command: 'winget install -e --id qBittorrent.qBittorrent --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-qbittorrent'
 
   - !writeStatus: {status: 'Installing Parsec', option: 'install-parsec'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums parsec'
+    runas: currentUserElevated
+    command: 'winget install -e --id Parsec.Parsec --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-parsec'
 
   - !writeStatus: {status: 'Installing Python', option: 'install-python'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install main/python'
     weight: 150
     option: 'install-python'
 
   - !writeStatus: {status: 'Installing Node.js', option: 'install-nodejs'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install main/nodejs'
     weight: 150
     option: 'install-nodejs'
 
   - !writeStatus: {status: 'Installing Java JDK', option: 'install-java'}
-  - !cmd: {command: 'scoop bucket add java'}
   - !cmd:
-    command: 'scoop install java/graalvm21-jdk21'
+    runas: currentUser
+    command: 'scoop bucket add java & scoop install java/graalvm21-jdk21'
     weight: 150
     option: 'install-java'
 
   - !writeStatus: {status: 'Installing Git', option: 'install-git'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums git.install --params "/GitAndUnixToolsOnPath /WindowsTerminal /NoAutoCrlf"'
+    runas: currentUserElevated
+    command: 'winget install -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-git'
 
   - !writeStatus: {status: 'Installing Yuzu', option: 'install-yuzu'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install games/yuzu-pineapple'
     weight: 150
     option: 'install-yuzu'
 
   - !writeStatus: {status: 'Installing Cemu', option: 'install-cemu'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install games/cemu-dev'
     weight: 150
     option: 'install-cemu'
 
   - !writeStatus: {status: 'Installing Citra', option: 'install-citra'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install games/citra'
     weight: 150
     option: 'install-citra'
 
   - !writeStatus: {status: 'Installing Dolphin', option: 'install-dolphin'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install games/dolphin-beta'
     weight: 150
     option: 'install-dolphin'
 
   - !writeStatus: {status: 'Installing Steam', option: 'install-steam'}
   - !cmd:
-    command: 'scoop install games/steam'
+    runas: currentUserElevated
+    command: 'winget install -e --id Valve.Steam --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-steam'
 
   - !writeStatus: {status: 'Installing Epic Games Launcher', option: 'install-epicgames'}
   - !cmd:
-    command: 'scoop install games/epic-games-launcher'
+    runas: currentUserElevated
+    command: 'winget install -e --id EpicGames.EpicGamesLauncher --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-epicgames'
 
   - !writeStatus: {status: 'Installing GOG Galaxy', option: 'install-gog'}
   - !cmd:
-    command: 'scoop install games/goggalaxy'
+    runas: currentUserElevated
+    command: 'winget install -e --id GOG.Galaxy --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-gog'
 
   - !writeStatus: {status: 'Installing Battle.net', option: 'install-battlenet'}
   - !cmd:
+    runas: currentUser
     command: 'scoop install games/battlenet'
     weight: 150
     option: 'install-battlenet'
 
   - !writeStatus: {status: 'Installing EA app', option: 'install-ea'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums ea-app'
+    runas: currentUserElevated
+    command: 'winget install -e --id ElectronicArts.EADesktop --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-ea'
 
   - !writeStatus: {status: 'Installing Ubisoft Connect', option: 'install-ubisoft'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums ubisoft-connect'
+    runas: currentUserElevated
+    command: 'winget install -e --id Ubisoft.Connect --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-ubisoft'
 
   - !writeStatus: {status: 'Installing Prism Launcher', option: 'install-prism'}
   - !cmd:
-    command: 'scoop install games/prismlauncher'
+    runas: currentUserElevated
+    command: 'winget install -e --id PrismLauncher.PrismLauncher --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-prism'
 
   - !writeStatus: {status: 'Installing PokeMMO', option: 'install-pokemmo'}
   - !cmd:
-    command: 'winget install --id=PokeMMO.PokeMMO -eh'
+    runas: currentUserElevated
+    command: 'winget install -e --id PokeMMO.PokeMMO --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-pokemmo'
 
   - !writeStatus: {status: 'Installing Discord', option: 'install-discord'}
   - !cmd:
-    command: 'scoop install extras/discord'
+    runas: currentUserElevated
+    command: 'winget install -e --id Discord.Discord --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-discord'
 
   - !writeStatus: {status: 'Installing Zoom', option: 'install-zoom'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums zoom --params="/NoDesktopShortcut"'
+    runas: currentUserElevated
+    command: 'winget install -e --id Zoom.Zoom --custom "zNoDesktopShortCut=True" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-zoom'
 
   - !writeStatus: {status: 'Installing Teams', option: 'install-teams'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums microsoft-teams'
+    runas: currentUserElevated
+    command: 'winget install -e --id Microsoft.Teams.Classic --custom "zNoDesktopShortCut=True" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-teams'
 
   - !writeStatus: {status: 'Installing OBS', option: 'install-obs'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums obs-studio.install'
+    runas: currentUserElevated
+    command: 'winget install -e --id OBSProject.OBSStudio --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-obs'
 
   - !writeStatus: {status: 'Installing HWiNFO', option: 'install-hwinfo'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums hwinfo.install'
+    runas: currentUserElevated
+    command: 'winget install -e --id REALiX.HWiNFO --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-hwinfo'
 
@@ -253,67 +291,78 @@ actions:
 
   - !writeStatus: {status: 'Installing Cinebench', option: 'install-cinebench'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums cinebench'
+    runas: currentUserElevated
+    command: 'winget install -e --id Maxon.CinebenchR23 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-cinebench'
 
   - !writeStatus: {status: 'Installing LatencyMon', option: 'install-latencymon'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums latencymon'
+    runas: currentUserElevated
+    command: 'winget install -e --id Resplendence.LatencyMon --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-latencymon'
 
   - !writeStatus: {status: 'Installing ShareX', option: 'install-sharex'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums sharex'
+    runas: currentUserElevated
+    command: 'winget install -e --id ShareX.ShareX --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-sharex'
 
   - !writeStatus: {status: 'Installing Meld', option: 'install-meld'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums meld'
+    runas: currentUserElevated
+    command: 'winget install -e --id Meld.Meld --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-meld'
 
   - !writeStatus: {status: 'Installing HxD', option: 'install-hxd'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums hxd'
+    runas: currentUserElevated
+    command: 'winget install -e --id MHNexus.HxD --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-hxd'
 
   - !writeStatus: {status: 'Installing Everything', option: 'install-everything'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums everything'
+    runas: currentUserElevated
+    command: 'winget install -e --id voidtools.Everything --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-everything'
 
   - !writeStatus: {status: 'Installing Pympress', option: 'install-pympress'}
   - !cmd:
-    command: 'winget install --id=Cimbali.pympress -eh'
+    runas: currentUserElevated
+    command: 'winget install -e --id Cimbali.pympress --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-pympress'
 
   - !writeStatus: {status: 'Installing Fedora Media Writer', option: 'install-fedorawriter'}
   - !cmd:
-    command: 'winget install --id=Fedora.FedoraMediaWriter -eh'
+    runas: currentUserElevated
+    command: 'winget install -e --id Fedora.FedoraMediaWriter --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-fedorawriter'
 
   - !writeStatus: {status: 'Installing Fedora Butane', option: 'install-fedorabutane'}
   - !cmd:
-    command: 'winget install --id=Fedora.CoreOS.butane -eh'
+    runas: currentUserElevated
+    command: 'winget install -e --id Fedora.CoreOS.butane --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-fedorabutane'
 
   - !writeStatus: {status: 'Installing WizTree', option: 'install-wiztree'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums wiztree'
+    runas: currentUserElevated
+    command: 'winget install -e --id AntibodySoftware.WizTree --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-wiztree'
 
   - !writeStatus: {status: 'Installing NVIDIA graphics drivers', option: 'install-nvidia'}
   - !cmd:
-    command: 'scoop install extras/nvcleanstall'
+    runas: currentUserElevated
+    command: 'winget install -e --id TechPowerUp.NVCleanstall --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-nvidia'
 
@@ -325,29 +374,28 @@ actions:
 
   - !writeStatus: {status: 'Installing Intel wireless drivers', option: 'install-intelwireless'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums intel-proset-drivers'
-    weight: 75
-    option: 'install-intelwireless'
-  - !cmd:
-    command: 'choco install -y --allow-empty-checksums intel-bluetooth-drivers'
-    weight: 75
+    command: 'choco install -y --allow-empty-checksums intel-proset-drivers intel-bluetooth-drivers'
+    weight: 150
     option: 'install-intelwireless'
 
   - !writeStatus: {status: 'Installing Snappy Driver Installer Origin', option: 'install-sdio'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums sdio'
+    runas: currentUserElevated
+    command: 'winget install -e --id GlennDelahoy.SnappyDriverInstallerOrigin --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-sdio'
 
   - !writeStatus: {status: 'Installing Razer Synapse', option: 'install-synapse'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums razer-synapse-3'
+    runas: currentUserElevated
+    command: 'winget install -e --id RazerInc.RazerInstaller --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-synapse'
 
   - !writeStatus: {status: 'Installing MSI Afterburner', option: 'install-afterburner'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums msiafterburner'
+    runas: currentUserElevated
+    command: 'winget install -e --id Guru3D.Afterburner --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-afterburner'
 
@@ -369,7 +417,8 @@ actions:
 
   - !writeStatus: {status: 'Installing 7-Zip'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums 7zip.install'
+    runas: currentUserElevated
+    command: 'winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
   - !writeStatus: {status: 'Configuring 7-Zip'}
   - !run:
@@ -379,7 +428,8 @@ actions:
 
   - !writeStatus: {status: 'Installing Notepad3'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums notepad3.install'
+    runas: currentUserElevated
+    command: 'winget install -e --id Rizonesoft.Notepad3 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
   - !writeStatus: {status: 'Configuring Notepad3'}
   - !cmd:
@@ -393,7 +443,8 @@ actions:
 
   - !writeStatus: {status: 'Installing WinFsp'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums winfsp'
+    runas: currentUserElevated
+    command: 'winget install -e --id WinFsp.WinFsp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Enabling NFS client'}
@@ -409,14 +460,19 @@ actions:
   - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart -All'}
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Linux'}
-  - !powerShell: {command: 'wsl --install', weight: 150}
+  - !cmd: {command: 'wsl --install', runas: currentUserElevated, weight: 150}
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Android'}
   - !run:
     exeDir: true
     exe: 'PowerShell'
+    runas: currentUserElevated
     args: '-NoP -ExecutionPolicy Bypass -File WSA.ps1'
     weight: 300
   - !cmd:
-    command: 'scoop install extras/wsa-pacman'
+    runas: currentUserElevated
+    command: 'winget install -e --id alesimula.wsa_pacman --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
+
+  - !writeStatus: {status: 'Cleanup Temp folder'}
+  - !powerShell: {command: 'Remove-Item -Path "$env:TEMP\*" -Recurse -Force'}
