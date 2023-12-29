@@ -52,8 +52,27 @@ actions:
     exeDir: true
     exe: 'ADMIN.bat'
 
+    # ======> Locale
+    # === Set Central Europe Time - On
+  - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\TimeZoneInformation', value: 'TimeZoneKeyName', type: REG_SZ, data: 'Romance Standard Time'}
+    # === European formats
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'iCalendarType', type: REG_SZ, data: '1'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'iDate', type: REG_SZ, data: '1'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'iFirstDayOfWeek', type: REG_SZ, data: '0'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'iFirstWeekOfYear', type: REG_SZ, data: '0'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'iLZero', type: REG_SZ, data: '1'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sCurrency', type: REG_SZ, data: '€'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sDate', type: REG_SZ, data: '/'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sDecimal', type: REG_SZ, data: '.'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sGrouping', type: REG_SZ, data: '3;0'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sList', type: REG_SZ, data: ','}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sShortDate', type: REG_SZ, data: 'dd/MM/yyyy'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sShortTime', type: REG_SZ, data: 'HH:mm'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sThousand', type: REG_SZ, data: ','}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sTime', type: REG_SZ, data: ':'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sTimeFormat', type: REG_SZ, data: 'HH:mm:ss'}
+  - !registryValue: {path: 'HKCU\Control Panel\International', value: 'sYearMonth', type: REG_SZ, data: 'MMMM yyyy'}
+
     # ======> Extra
     # === Disable MPO - On
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\Dwm', value: 'OverlayTestMode', type: REG_DWORD, data: '5'}
-    # === Set Central Europe Time - On
-  - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\TimeZoneInformation', value: 'TimeZoneKeyName', type: REG_SZ, data: 'Romance Standard Time'}
