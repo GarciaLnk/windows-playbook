@@ -5,11 +5,12 @@ actions:
   - !writeStatus: {status: 'Installing Scoop'}
   - !powerShell:
     runas: currentUser
-    command: 'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force; Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression'
+    command: 'Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression'
   - !cmd: {command: 'scoop bucket add main games extras', runas: currentUser}
 
   - !writeStatus: {status: 'Configuring Choco'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco feature enable -n=useRememberedArgumentsForUpgrades'
     weight: 20
 
@@ -17,8 +18,8 @@ actions:
   - !powerShell: {command: 'irm asheroto.com/winget | iex', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Resetting MS Store'}
-  - !powerShell: {command: 'wsreset'}
-  - !powerShell: {command: 'Get-CimInstance -Namespace "Root\cimv2\mdm\dmmap" -ClassName "MDM_EnterpriseModernAppManagement_AppManagement01" | Invoke-CimMethod -MethodName UpdateScanMethod'}
+  - !powerShell: {command: 'wsreset', runas: currentUserElevated}
+  - !powerShell: {command: 'Get-CimInstance -Namespace "Root\cimv2\mdm\dmmap" -ClassName "MDM_EnterpriseModernAppManagement_AppManagement01" | Invoke-CimMethod -MethodName UpdateScanMethod', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Installing Visual C++ Runtime'}
   - !cmd:
@@ -56,6 +57,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums microsoft-office-deployment --params="/64bit /ProofingToolLanguage:en-us,es-es /Exclude:Publisher,OneDrive,Outlook,OneNote,Lync,Groove"'
     weight: 150
     option: 'install-office'
@@ -90,6 +92,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Adobe Reader DC', option: 'install-adobereader'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums adobereader'
     weight: 150
     option: 'install-adobereader'
@@ -285,6 +288,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Furmark', option: 'install-furmark'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums furmark'
     weight: 150
     option: 'install-furmark'
@@ -368,12 +372,14 @@ actions:
 
   - !writeStatus: {status: 'Installing AMD Ryzen drivers', option: 'install-ryzen'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums amd-ryzen-chipset'
     weight: 150
     option: 'install-ryzen'
 
   - !writeStatus: {status: 'Installing Intel wireless drivers', option: 'install-intelwireless'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums intel-proset-drivers intel-bluetooth-drivers'
     weight: 150
     option: 'install-intelwireless'
@@ -401,6 +407,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Universal x86 Tuning Utility', option: 'install-uxtu'}
   - !run:
+    runas: currentUserElevated
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File UXTU.ps1'
@@ -409,6 +416,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Realtek PCIe Ethernet driver', option: 'install-realtekethernet'}
   - !run:
+    runas: currentUserElevated
     exeDir: true
     exe: 'RealtekPCIeEthernetDriver.exe'
     args: '-s -SMS'
@@ -433,11 +441,13 @@ actions:
     weight: 150
   - !writeStatus: {status: 'Configuring Notepad3'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums  install notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
     weight: 20
 
   - !writeStatus: {status: 'Installing mpv'}
   - !cmd:
+    runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums mpv.install'
     weight: 150
 
@@ -473,6 +483,3 @@ actions:
     runas: currentUserElevated
     command: 'winget install -e --id alesimula.wsa_pacman --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
-
-  - !writeStatus: {status: 'Cleanup Temp folder'}
-  - !powerShell: {command: 'Remove-Item -Path "$env:TEMP\*" -Recurse -Force'}
