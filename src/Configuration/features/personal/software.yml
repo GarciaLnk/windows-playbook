@@ -59,6 +59,7 @@ actions:
     option: 'browser-firefox'
   - !writeStatus: {status: 'Configuring Firefox', option: 'browser-firefox'}
   - !run: {exe: 'FIREFOX.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
+  - !run: {exe: 'TASKBARPINS.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
 
   - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
   - !cmd:
