@@ -2,6 +2,15 @@ title: Software (personal)
 description: Installs preferred personal software
 privilege: TrustedInstaller
 actions:
+  - !writeStatus: {status: 'Installing WinGet'}
+  - !powerShell: {command: 'irm asheroto.com/winget | iex', runas: currentUserElevated}
+
+  - !writeStatus: {status: 'Installing Git'}
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    weight: 150
+
   - !writeStatus: {status: 'Installing Scoop'}
   - !powerShell:
     runas: currentUser
@@ -13,9 +22,6 @@ actions:
     runas: currentUserElevated
     command: 'choco feature enable -n=useRememberedArgumentsForUpgrades'
     weight: 20
-
-  - !writeStatus: {status: 'Installing WinGet'}
-  - !powerShell: {command: 'irm asheroto.com/winget | iex', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Resetting MS Store'}
   - !powerShell: {command: 'wsreset', runas: currentUserElevated}
@@ -160,12 +166,12 @@ actions:
     weight: 150
     option: 'install-java'
 
-  - !writeStatus: {status: 'Installing Git', option: 'install-git'}
+  - !writeStatus: {status: 'Installing Go', option: 'install-go'}
   - !cmd:
-    runas: currentUserElevated
-    command: 'winget install -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    runas: currentUser
+    command: 'scoop install main/go'
     weight: 150
-    option: 'install-git'
+    option: 'install-go'
 
   - !writeStatus: {status: 'Installing Yuzu', option: 'install-yuzu'}
   - !cmd:
