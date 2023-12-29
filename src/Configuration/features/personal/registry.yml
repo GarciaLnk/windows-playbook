@@ -35,6 +35,8 @@ actions:
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates', value: 'ShortcutNameTemplate', type: REG_SZ, data: '"%s.lnk"'}
     # === Disable News and Interests - On
   - !registryValue: {path: 'HKCU\Software\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests', value: 'value', type: REG_DWORD, data: '0'}
+    # Enables full drive indexing (Enhanced Search)
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex', value: 'EnableFindMyFiles', type: REG_DWORD, data: '1'}
 
     # ======> Security
     # === UAC
