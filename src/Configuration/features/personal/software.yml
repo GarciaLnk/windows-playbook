@@ -333,12 +333,12 @@ actions:
     weight: 150
     option: 'install-hxd'
 
-  - !writeStatus: {status: 'Installing Everything', option: 'install-everything'}
+  - !writeStatus: {status: 'Installing Stremio', option: 'install-stremio'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id voidtools.Everything --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Stremio.Stremio --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
-    option: 'install-everything'
+    option: 'install-stremio'
 
   - !writeStatus: {status: 'Installing Pympress', option: 'install-pympress'}
   - !cmd:
