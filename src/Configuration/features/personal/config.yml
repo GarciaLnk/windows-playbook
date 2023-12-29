@@ -8,3 +8,6 @@ actions:
 
   - !writeStatus: {status: 'Removing startup programs'}
   - !powerShell: {command: 'Remove-Item -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\*" -Recurse'}
+
+  - !writeStatus: {status: 'Removing hidden defaultuser0 account used during OOBE'}
+  - !run: {exe: 'net', args: 'user defaultuser0 /delete', ignoreErrors: true}
