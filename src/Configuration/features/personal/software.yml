@@ -15,7 +15,8 @@ actions:
   - !powerShell:
     runas: currentUser
     command: 'Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression'
-  - !cmd: {command: 'scoop bucket add main games extras', runas: currentUser}
+  - !cmd: {command: 'scoop bucket add games', runas: currentUser}
+  - !cmd: {command: 'scoop bucket add extras', runas: currentUser}
 
   - !writeStatus: {status: 'Configuring Choco'}
   - !cmd:
