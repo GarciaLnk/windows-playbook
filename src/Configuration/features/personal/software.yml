@@ -3,7 +3,7 @@ description: Installs preferred personal software
 privilege: TrustedInstaller
 actions:
   - !writeStatus: {status: 'Installing WinGet'}
-  - !powerShell: {command: 'irm asheroto.com/winget | iex', runas: currentUserElevated}
+  - !powerShell: {command: '&([ScriptBlock]::Create((irm asheroto.com/winget))) -Force', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Installing Git'}
   - !cmd:
