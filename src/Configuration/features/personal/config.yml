@@ -1,0 +1,10 @@
+---
+title: Configuration (personal)
+description: Applies some custom configurations
+privilege: TrustedInstaller
+actions:
+  - !writeStatus: {status: 'Removing desktop shortcuts'}
+  - !powerShell: {command: 'Remove-Item -Path "$HOME\Desktop\*.lnk"'}
+
+  - !writeStatus: {status: 'Removing startup programs'}
+  - !powerShell: {command: 'Remove-Item -Path "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\*" -Recurse'}
