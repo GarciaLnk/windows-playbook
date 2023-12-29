@@ -56,7 +56,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums microsoft-office-deployment --params="/64bit /ProofingToolLanguage:en-us,es-es /Exclude:Publisher,OneDrive,Outlook,OneNote,Lync,Groove"'
+    command: 'choco install -y --no-progress --allow-empty-checksums microsoft-office-deployment --params="/64bit /ProofingToolLanguage:en-us,es-es /Exclude:Publisher,OneDrive,Outlook,OneNote,Lync,Groove"'
     weight: 150
     option: 'install-office'
 
@@ -90,7 +90,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Adobe Reader DC', option: 'install-adobereader'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums adobereader'
+    command: 'choco install -y --no-progress --allow-empty-checksums adobereader'
     weight: 150
     option: 'install-adobereader'
 
@@ -285,7 +285,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Furmark', option: 'install-furmark'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums furmark'
+    command: 'choco install -y --no-progress --allow-empty-checksums furmark'
     weight: 150
     option: 'install-furmark'
 
@@ -368,13 +368,13 @@ actions:
 
   - !writeStatus: {status: 'Installing AMD Ryzen drivers', option: 'install-ryzen'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums amd-ryzen-chipset'
+    command: 'choco install -y --no-progress --allow-empty-checksums amd-ryzen-chipset'
     weight: 150
     option: 'install-ryzen'
 
   - !writeStatus: {status: 'Installing Intel wireless drivers', option: 'install-intelwireless'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums intel-proset-drivers intel-bluetooth-drivers'
+    command: 'choco install -y --no-progress --allow-empty-checksums intel-proset-drivers intel-bluetooth-drivers'
     weight: 150
     option: 'install-intelwireless'
 
@@ -433,12 +433,12 @@ actions:
     weight: 150
   - !writeStatus: {status: 'Configuring Notepad3'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums  install notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
+    command: 'choco install -y --no-progress --allow-empty-checksums  install notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
     weight: 20
 
   - !writeStatus: {status: 'Installing mpv'}
   - !cmd:
-    command: 'choco install -y --allow-empty-checksums mpv.install'
+    command: 'choco install -y --no-progress --allow-empty-checksums mpv.install'
     weight: 150
 
   - !writeStatus: {status: 'Installing WinFsp'}
