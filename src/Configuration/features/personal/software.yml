@@ -99,7 +99,7 @@ actions:
   - !writeStatus: {status: 'Installing Adobe Reader DC', option: 'install-adobereader'}
   - !cmd:
     runas: currentUserElevated
-    command: 'choco install -y --no-progress --allow-empty-checksums adobereader'
+    command: 'choco install -y --no-progress --allow-empty-checksums adobereader --params "AddDesktopIcon=0"'
     weight: 150
     option: 'install-adobereader'
 
@@ -123,6 +123,11 @@ actions:
     command: 'winget install -e --id Cloudflare.Warp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-warp'
+  - !powerShell:
+    runas: currentUser
+    command: 'Get-Process -Name warp -ErrorAction SilentlyContinue | Stop-Process'
+    weight: 20
+    option: 'install-warp'
 
   - !writeStatus: {status: 'Installing Tailscale', option: 'install-tailscale'}
   - !cmd:
@@ -144,6 +149,7 @@ actions:
     command: 'winget install -e --id Parsec.Parsec --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-parsec'
+  - !service: {name: 'Parsec', operation: change, startup: 3, option: 'install-parsec'}
 
   - !writeStatus: {status: 'Installing Python', option: 'install-python'}
   - !cmd:
@@ -204,14 +210,14 @@ actions:
   - !writeStatus: {status: 'Installing Steam', option: 'install-steam'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Valve.Steam --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Valve.Steam --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-steam'
 
   - !writeStatus: {status: 'Installing Epic Games Launcher', option: 'install-epicgames'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id EpicGames.EpicGamesLauncher --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id EpicGames.EpicGamesLauncher --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-epicgames'
 
@@ -263,6 +269,11 @@ actions:
     command: 'winget install -e --id Discord.Discord --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-discord'
+  - !powerShell:
+    runas: currentUser
+    command: 'Get-Process Discord -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process Discord -ea 0 | Stop-Process -Force'
+    weight: 20
+    option: 'install-discord'
 
   - !writeStatus: {status: 'Installing Zoom', option: 'install-zoom'}
   - !cmd:
@@ -274,14 +285,14 @@ actions:
   - !writeStatus: {status: 'Installing Teams', option: 'install-teams'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.Teams.Classic --custom "zNoDesktopShortCut=True" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Microsoft.Teams.Classic --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-teams'
 
   - !writeStatus: {status: 'Installing OBS', option: 'install-obs'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id OBSProject.OBSStudio --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id OBSProject.OBSStudio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-obs'
 
@@ -318,6 +329,11 @@ actions:
     runas: currentUserElevated
     command: 'winget install -e --id ShareX.ShareX --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
+    option: 'install-sharex'
+  - !powerShell:
+    runas: currentUser
+    command: 'Get-Process -Name sharex -ErrorAction SilentlyContinue | Stop-Process'
+    weight: 20
     option: 'install-sharex'
 
   - !writeStatus: {status: 'Installing Meld', option: 'install-meld'}
@@ -400,7 +416,7 @@ actions:
   - !writeStatus: {status: 'Installing Razer Synapse', option: 'install-synapse'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id RazerInc.RazerInstaller --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'choco install -y --no-progress --allow-empty-checksums razer-synapse-3'
     weight: 150
     option: 'install-synapse'
 
