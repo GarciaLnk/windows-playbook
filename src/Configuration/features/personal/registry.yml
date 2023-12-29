@@ -50,9 +50,15 @@ actions:
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'FilterAdministratorToken', type: REG_DWORD, data: '0'}
 
     # Enable Admin account and downgrade user account
-  - !run:
-    exeDir: true
-    exe: 'ADMIN.bat'
+  - !run: {exeDir: true, exe: 'ADMIN.bat'}
+
+    # Blocks Anonymous Enumeration of SAM Accounts
+    # https://www.stigviewer.com/stig/microsoft_windows_10/2022-04-08/finding/V-220929
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\Lsa', value: 'RestrictAnonymousSAM', data: '1', type: REG_DWORD}
+
+    # Disable Remote Assistance
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\Remote Assistance', value: 'fAllowFullControl', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\Remote Assistance', value: 'fAllowToGetHelp', data: '0', type: REG_DWORD}
 
     # ======> Locale
     # === Set Central Europe Time - On
