@@ -90,10 +90,11 @@ actions:
     option: 'install-powertoys'
 
   - !writeStatus: {status: 'Installing QEMU guest tools', option: 'install-guest-tools'}
-  - !cmd:
-    runas: currentUserElevated
-    command: 'winget install SoftwareFreedomConservancy.QEMUGuestAgent Spice.VDAgent Spice.SpiceWebDAVd --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
-    weight: 75
+  - !run:
+    exeDir: true
+    exe: 'PowerShell'
+    args: '-NoP -ExecutionPolicy Bypass -File VIRTIO.ps1'
+    weight: 150
     option: 'install-guest-tools'
 
   - !writeStatus: {status: 'Installing Adobe Reader DC', option: 'install-adobereader'}
@@ -429,7 +430,6 @@ actions:
 
   - !writeStatus: {status: 'Installing Universal x86 Tuning Utility', option: 'install-uxtu'}
   - !run:
-    runas: currentUserElevated
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File UXTU.ps1'
@@ -438,7 +438,6 @@ actions:
 
   - !writeStatus: {status: 'Installing Realtek PCIe Ethernet driver', option: 'install-realtekethernet'}
   - !run:
-    runas: currentUserElevated
     exeDir: true
     exe: 'RealtekPCIeEthernetDriver.exe'
     args: '-s -SMS'
@@ -498,7 +497,6 @@ actions:
   - !run:
     exeDir: true
     exe: 'PowerShell'
-    runas: currentUserElevated
     args: '-NoP -ExecutionPolicy Bypass -File WSA.ps1'
     weight: 300
   - !cmd:
