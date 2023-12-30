@@ -457,27 +457,18 @@ actions:
     weight: 150
     option: 'install-realtekethernet'
 
-  - !writeStatus: {status: 'Installing 7-Zip'}
-  - !cmd:
-    runas: currentUserElevated
-    command: 'winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
-    weight: 150
-  - !writeStatus: {status: 'Configuring 7-Zip'}
-  - !run:
-    exeDir: true
-    exe: '7ZIP.cmd'
-    weight: 20
-
-  - !writeStatus: {status: 'Installing Notepad3'}
+  - !writeStatus: {status: 'Installing Notepad3', option: 'install-notepad'}
   - !cmd:
     runas: currentUserElevated
     command: 'winget install -e --id Rizonesoft.Notepad3 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
-  - !writeStatus: {status: 'Configuring Notepad3'}
+    option: 'install-notepad'
+  - !writeStatus: {status: 'Configuring Notepad3', option: 'install-notepad'}
   - !cmd:
     runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
     weight: 20
+    option: 'install-notepad'
 
   - !writeStatus: {status: 'Installing mpv'}
   - !cmd:
@@ -485,36 +476,32 @@ actions:
     command: 'choco install -y --no-progress --allow-empty-checksums mpv.install'
     weight: 150
 
-  - !writeStatus: {status: 'Installing WinFsp'}
-  - !cmd:
-    runas: currentUserElevated
-    command: 'winget install -e --id WinFsp.WinFsp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
-    weight: 150
+  - !writeStatus: {status: 'Enabling NFS client', option: 'install-miscfeatures'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName ServicesForNFS-ClientOnly -NoRestart -All', option: 'install-miscfeatures'}
 
-  - !writeStatus: {status: 'Enabling NFS client'}
-  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName ServicesForNFS-ClientOnly -NoRestart -All'}
+  - !writeStatus: {status: 'Enabling SSH client', option: 'install-miscfeatures'}
+  - !powerShell: {command: 'Add-WindowsCapability -Online -Name OpenSSH.Client', option: 'install-miscfeatures'}
 
-  - !writeStatus: {status: 'Enabling SSH client'}
-  - !powerShell: {command: 'Add-WindowsCapability -Online -Name OpenSSH.Client'}
-
-  - !writeStatus: {status: 'Enabling Windows Sandbox'}
-  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -NoRestart -All'}
+  - !writeStatus: {status: 'Enabling Windows Sandbox', option: 'install-miscfeatures'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -NoRestart -All', option: 'install-miscfeatures'}
 
   - !writeStatus: {status: 'Enabling Virtual Machine Platform'}
   - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart -All'}
 
-  - !writeStatus: {status: 'Installing Windows Subsystem for Linux'}
-  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart -All'}
-  - !cmd: {command: 'wsl --install', runas: currentUserElevated, weight: 150}
+  - !writeStatus: {status: 'Installing Windows Subsystem for Linux', option: 'install-wsl'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart -All', option: 'install-wsl'}
+  - !cmd: {command: 'wsl --install', runas: currentUserElevated, weight: 150, option: 'install-wsl'}
 
-  - !writeStatus: {status: 'Installing Windows Subsystem for Android'}
+  - !writeStatus: {status: 'Installing Windows Subsystem for Android', option: 'install-wsa'}
   - !run:
     runas: currentUserElevated
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File WSA.ps1'
     weight: 300
+    option: 'install-wsa'
   - !cmd:
     runas: currentUserElevated
     command: 'winget install -e --id alesimula.wsa_pacman --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
+    option: 'install-wsa'
