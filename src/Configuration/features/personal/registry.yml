@@ -11,12 +11,12 @@ actions:
     # === Small taskbar buttons - On
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'TaskbarSi', type: REG_DWORD, data: '0'}
     # Disable Cloud Optimized Content on Taskbar
-  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\CloudContent', value: 'DisableCloudOptimizedContent', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\Windows\CloudContent', value: 'DisableCloudOptimizedContent', data: '1', type: REG_DWORD}
     # Disable Show Desktop Peek on Taskbar
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'DisablePreviewDesktop', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'DisablePreviewDesktop', data: '1', type: REG_DWORD}
     # Disable Task View on Taskbar
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MultiTaskingView\AllUpView', value: 'Enabled', operation: delete}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'ShowTaskViewButton', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\MultiTaskingView\AllUpView', value: 'Enabled', operation: delete}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'ShowTaskViewButton', data: '0', type: REG_DWORD}
     # Set Taskbar to Align Left
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'TaskbarAl', data: '0', type: REG_DWORD}
     # Disable Search button
@@ -47,30 +47,30 @@ actions:
     # === Disable News and Interests - On
   - !registryValue: {path: 'HKCU\Software\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests', value: 'value', type: REG_DWORD, data: '0'}
     # Disables full drive indexing (Enhanced Search)
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex', value: 'EnableFindMyFiles', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows Search\Gather\Windows\SystemIndex', value: 'EnableFindMyFiles', type: REG_DWORD, data: '0'}
     # Revert to Classic Search
-  - !registryValue: {path: 'HKLM\SOFTWARE\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Classes\WOW6432Node\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
-  - !registryValue: {path: 'HKLM\SOFTWARE\WOW6432Node\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
+  - !registryValue: {path: 'HKLM\Software\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
+  - !registryValue: {path: 'HKLM\Software\Classes\WOW6432Node\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
+  - !registryValue: {path: 'HKLM\Software\WOW6432Node\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
 
     # ======> Security
     # === UAC
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorAdmin', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorUser', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableInstallerDetection', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableLUA', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableVirtualization', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'PromptOnSecureDesktop', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ValidateAdminCodeSignatures', type: REG_DWORD, data: '0'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'FilterAdministratorToken', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorAdmin', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorUser', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableInstallerDetection', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableLUA', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableVirtualization', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'PromptOnSecureDesktop', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ValidateAdminCodeSignatures', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'FilterAdministratorToken', type: REG_DWORD, data: '0'}
 
     # Blocks Anonymous Enumeration of SAM Accounts
     # https://www.stigviewer.com/stig/microsoft_windows_10/2022-04-08/finding/V-220929
-  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\Lsa', value: 'RestrictAnonymousSAM', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\Lsa', value: 'RestrictAnonymousSAM', data: '1', type: REG_DWORD}
 
     # Disable Remote Assistance
-  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\Remote Assistance', value: 'fAllowFullControl', data: '0', type: REG_DWORD}
-  - !registryValue: {path: 'HKLM\SYSTEM\CurrentControlSet\Control\Remote Assistance', value: 'fAllowToGetHelp', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\Remote Assistance', value: 'fAllowFullControl', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\Remote Assistance', value: 'fAllowToGetHelp', data: '0', type: REG_DWORD}
 
     # ======> Locale
     # === Set Central Europe Time - On
@@ -101,21 +101,21 @@ actions:
     # Reference: https://gist.github.com/he3als/3d9dcf6e796aa920c24a98130165fb17
 
     # Enable Storage Sense
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '01', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '01', type: REG_DWORD, data: '1'}
     # Run Storage Sense
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '1024', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '1024', type: REG_DWORD, data: '1'}
     # Run Storage Sense every month
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '2048', type: REG_DWORD, data: '30'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '2048', type: REG_DWORD, data: '30'}
     # Enable cleaning temporary files
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '04', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '04', type: REG_DWORD, data: '1'}
     # Disable the 'Downloads' from being cleared
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '32', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '32', type: REG_DWORD, data: '0'}
     # Disable OneDrive cleanup
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '02', type: REG_DWORD, data: '0'}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '128', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '02', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '128', type: REG_DWORD, data: '0'}
     # Clean Recycle Bin every month
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '08', type: REG_DWORD, data: '1'}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '256', type: REG_DWORD, data: '30'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '08', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\StorageSense\Parameters\StoragePolicy', value: '256', type: REG_DWORD, data: '30'}
     # Enable cleaning temp files
   - !scheduledTask: {path: '\Microsoft\Windows\DiskCleanup\SilentCleanup', operation: enable}
 
@@ -127,8 +127,8 @@ actions:
   - !run: {exe: 'w32tm', args: '/resync'}
 
     # Disable 'Always Read and Scan This Section'
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Ease of Access', value: 'selfscan', data: '0', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Ease of Access', value: 'selfvoice', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Ease of Access', value: 'selfscan', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Ease of Access', value: 'selfvoice', data: '0', type: REG_DWORD}
 
     # Disable Ease of Access Sounds
   - !registryValue: {path: 'HKCU\Control Panel\Accessibility', value: 'Warning Sounds', data: '0', type: REG_DWORD}
@@ -136,14 +136,14 @@ actions:
   - !registryValue: {path: 'HKCU\Control Panel\Accessibility\SoundSentry', value: 'WindowsEffect', data: '0', type: REG_SZ}
 
     # Do Not Show Edge Tabs in Alt-Tab
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'MultiTaskingAltTabFilter', data: '3', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'MultiTaskingAltTabFilter', data: '3', type: REG_DWORD}
 
     # Disable AutoRun/AutoPlay
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer', value: 'NoAutorun', data: '1', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers', value: 'DisableAutoplay', data: '1', type: REG_DWORD}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer', value: 'NoDriveTypeAutoRun', data: '255', type: REG_DWORD}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer', value: 'NoAutorun', data: '1', type: REG_DWORD}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\Explorer', value: 'NoAutoplayfornonVolume', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer', value: 'NoAutorun', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers', value: 'DisableAutoplay', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer', value: 'NoDriveTypeAutoRun', data: '255', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer', value: 'NoAutorun', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\Windows\Explorer', value: 'NoAutoplayfornonVolume', data: '1', type: REG_DWORD}
 
     # Disable Recommendations in the Start Menu
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'Start_IrisRecommendations', data: '0', type: REG_DWORD, builds: ['>=22000']}
@@ -154,13 +154,13 @@ actions:
   - !registryValue: {path: 'HKCU\Control Panel\Desktop', value: 'UserPreferencesMask', data: '9012038010000000', type: REG_BINARY}
   - !registryValue: {path: 'HKCU\Control Panel\Desktop', value: 'DragFullWindows', data: '1', type: REG_SZ}
   - !registryValue: {path: 'HKCU\Control Panel\Desktop\WindowMetrics', value: 'MinAnimate', data: '0', type: REG_SZ}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'ListviewAlphaSelect', data: '1', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'IconsOnly', data: '0', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'TaskbarAnimations', data: '0', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'ListviewShadow', data: '1', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects', value: 'VisualFXSetting', data: '3', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\DWM', value: 'EnableAeroPeek', data: '0', type: REG_DWORD}
-  - !registryValue: {path: 'HKCU\SOFTWARE\Microsoft\Windows\DWM', value: 'AlwaysHibernateThumbnails', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'ListviewAlphaSelect', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'IconsOnly', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'TaskbarAnimations', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced', value: 'ListviewShadow', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects', value: 'VisualFXSetting', data: '3', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\DWM', value: 'EnableAeroPeek', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\DWM', value: 'AlwaysHibernateThumbnails', data: '0', type: REG_DWORD}
 
     # Disable Recycle Bin shortcut on Desktop
-  - !registryKey: {path: 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{645FF040-5081-101B-9F08-00AA002F954E}'}
+  - !registryKey: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{645FF040-5081-101B-9F08-00AA002F954E}'}
