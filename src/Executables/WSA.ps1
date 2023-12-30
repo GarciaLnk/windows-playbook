@@ -2,12 +2,12 @@ $url = "https://github.com/MustardChef/WSABuilds/releases/download/Windows_11_23
 $tempPath = "$env:TEMP\WSA_2310.40000.2.0.7z"
 $extractPath = "$env:TEMP\WSA_2310.40000.2.0_x64"
 
-Invoke-WebRequest -Uri $url -OutFile $tempPath
-
 if (-not (Get-Command "7z.exe" -ErrorAction SilentlyContinue)) {
     Write-Error "7-Zip is not installed or not in the system's PATH. Please install it and try again."
     exit
 }
+
+Invoke-WebRequest -Uri $url -OutFile $tempPath
 
 # Extract the .7z archive
 7z x "$tempPath" -o"$env:TEMP"

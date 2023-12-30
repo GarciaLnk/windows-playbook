@@ -3,7 +3,7 @@ description: Installs preferred personal software
 privilege: TrustedInstaller
 actions:
   - !writeStatus: {status: 'Installing WinGet'}
-  - !powerShell: {command: '&([ScriptBlock]::Create((irm asheroto.com/winget))) -Force', runas: currentUserElevated}
+  - !powerShell: {command: '&([ScriptBlock]::Create((irm asheroto.com/winget))) -Force; winget settings --enable InstallerHashOverride', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Installing Git'}
   - !cmd:
@@ -108,13 +108,13 @@ actions:
   - !writeStatus: {status: 'Installing KDE Connect', option: 'install-kdeconnect'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id KDE.KDEConnect --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id KDE.KDEConnect -v 23.08.1 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-kdeconnect'
 
   - !writeStatus: {status: 'Installing Equalizer APO', option: 'install-eqapo'}
   - !cmd:
-    runas: currentUser
+    runas: currentUserElevated
     command: 'scoop bucket add nonportable & scoop install nonportable/equalizer-apo-np'
     weight: 150
     option: 'install-eqapo'
@@ -126,15 +126,15 @@ actions:
     weight: 150
     option: 'install-warp'
   - !powerShell:
-    runas: currentUser
-    command: 'Get-Process -Name warp -ErrorAction SilentlyContinue | Stop-Process'
+    runas: currentUserElevated
+    command: "Get-Process 'Cloudflare WARP' -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process 'Cloudflare WARP' -ea 0 | Stop-Process -Force"
     weight: 20
     option: 'install-warp'
 
   - !writeStatus: {status: 'Installing Tailscale', option: 'install-tailscale'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Tailscale.Tailscale --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id tailscale.tailscale --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-tailscale'
 
@@ -232,7 +232,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Battle.net', option: 'install-battlenet'}
   - !cmd:
-    runas: currentUser
+    runas: currentUserElevated
     command: 'scoop install games/battlenet'
     weight: 150
     option: 'install-battlenet'
@@ -247,7 +247,7 @@ actions:
   - !writeStatus: {status: 'Installing Ubisoft Connect', option: 'install-ubisoft'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Ubisoft.Connect --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Ubisoft.Connect --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-ubisoft'
 
@@ -260,19 +260,19 @@ actions:
 
   - !writeStatus: {status: 'Installing PokeMMO', option: 'install-pokemmo'}
   - !cmd:
-    runas: currentUserElevated
-    command: 'winget install -e --id PokeMMO.PokeMMO --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    runas: currentUser
+    command: 'winget install -e --id PokeMMO.PokeMMO --ignore-security-hash --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-pokemmo'
 
   - !writeStatus: {status: 'Installing Discord', option: 'install-discord'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Discord.Discord --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Discord.Discord --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-discord'
   - !powerShell:
-    runas: currentUser
+    runas: currentUserElevated
     command: 'Get-Process Discord -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process Discord -ea 0 | Stop-Process -Force'
     weight: 20
     option: 'install-discord'
@@ -304,6 +304,11 @@ actions:
     command: 'winget install -e --id REALiX.HWiNFO --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-hwinfo'
+  - !powerShell:
+    runas: currentUserElevated
+    command: 'Get-Process HWiNFO64 -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process HWiNFO64 -ea 0 | Stop-Process -Force'
+    weight: 20
+    option: 'install-hwinfo'
 
   - !writeStatus: {status: 'Installing Furmark', option: 'install-furmark'}
   - !cmd:
@@ -329,12 +334,12 @@ actions:
   - !writeStatus: {status: 'Installing ShareX', option: 'install-sharex'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id ShareX.ShareX --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id ShareX.ShareX --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-sharex'
   - !powerShell:
-    runas: currentUser
-    command: 'Get-Process -Name sharex -ErrorAction SilentlyContinue | Stop-Process'
+    runas: currentUserElevated
+    command: 'Get-Process ShareX -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process ShareX -ea 0 | Stop-Process -Force'
     weight: 20
     option: 'install-sharex'
 
@@ -355,7 +360,7 @@ actions:
   - !writeStatus: {status: 'Installing Stremio', option: 'install-stremio'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Stremio.Stremio --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Stremio.Stremio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-stremio'
 
@@ -383,7 +388,7 @@ actions:
   - !writeStatus: {status: 'Installing WizTree', option: 'install-wiztree'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id AntibodySoftware.WizTree --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id AntibodySoftware.WizTree --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-wiztree'
 
@@ -421,11 +426,14 @@ actions:
     command: 'choco install -y --no-progress --allow-empty-checksums razer-synapse-3'
     weight: 150
     option: 'install-synapse'
+  - !service: {name: 'RzActionSvc', operation: change, startup: 3, option: 'install-synapse'}
+  - !service: {name: 'Razer Game Manager Service', operation: change, startup: 3, option: 'install-synapse'}
+  - !service: {name: 'Razer Synapse Service', operation: change, startup: 3, option: 'install-synapse'}
 
   - !writeStatus: {status: 'Installing MSI Afterburner', option: 'install-afterburner'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Guru3D.Afterburner --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Guru3D.Afterburner --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-afterburner'
 
@@ -464,7 +472,7 @@ actions:
   - !writeStatus: {status: 'Configuring Notepad3'}
   - !cmd:
     runas: currentUserElevated
-    command: 'choco install -y --no-progress --allow-empty-checksums  install notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
+    command: 'choco install -y --no-progress --allow-empty-checksums notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
     weight: 20
 
   - !writeStatus: {status: 'Installing mpv'}
@@ -492,10 +500,12 @@ actions:
   - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart -All'}
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Linux'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart -All'}
   - !cmd: {command: 'wsl --install', runas: currentUserElevated, weight: 150}
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Android'}
   - !run:
+    runas: currentUserElevated
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File WSA.ps1'
