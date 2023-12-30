@@ -107,6 +107,7 @@ actions:
 
   - !writeStatus: {status: 'Installing QEMU guest tools', option: 'install-guest-tools'}
   - !run:
+    runas: system
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File VIRTIO.ps1'
