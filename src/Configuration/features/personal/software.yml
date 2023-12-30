@@ -507,7 +507,11 @@ actions:
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Linux', option: 'install-wsl'}
   - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart -All', option: 'install-wsl'}
-  - !cmd: {command: 'wsl --install', runas: currentUserElevated, weight: 150, option: 'install-wsl'}
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install -e --id Canonical.Ubuntu.2204 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    weight: 150
+    option: 'install-wsl'
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Android', option: 'install-wsa'}
   - !run:
