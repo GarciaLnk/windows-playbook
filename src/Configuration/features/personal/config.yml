@@ -4,12 +4,14 @@ description: Applies some custom configurations
 privilege: TrustedInstaller
 actions:
   - !writeStatus: {status: 'Removing desktop shortcuts'}
-  - !powerShell: {command: 'Get-ChildItem "$([System.Environment]::GetFolderPath("Desktop"))\*.lnk", "C:\Users\Public\Desktop\*.lnk" | Remove-Item -Force', runas: currentUserElevated}
+  - !powerShell: {command: 'Get-ChildItem "$env:USERPROFILE\Desktop\*.lnk" | Remove-Item -Force', runas: currentUserElevated}
+  - !powerShell: {command: 'Get-ChildItem "C:\Users\Public\Desktop\*.lnk" | Remove-Item -Force', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Removing startup programs'}
-  - !powerShell: {command: '(Get-ChildItem "$([System.Environment]::GetFolderPath("Startup"))\*.lnk", "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\*.lnk" -ErrorAction SilentlyContinue) | Remove-Item -Force', runas: currentUserElevated}
-  - !powerShell: {command: 'Remove-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" -Recurse', runas: currentUserElevated}
-  - !powerShell: {command: 'Remove-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Recurse', runas: currentUserElevated}
+  - !powerShell: {command: 'Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start` Menu\Programs\Startup\*.lnk" | Remove-Item -Force', runas: currentUserElevated}
+  - !powerShell: {command: 'Get-ChildItem "C:\ProgramData\Microsoft\Windows\Start` Menu\Programs\Startup\*.lnk" | Remove-Item -Force', runas: currentUserElevated}
+  - !powerShell: {command: 'Remove-Item -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" -Recurse -ErrorAction SilentlyContinue', runas: currentUserElevated}
+  - !powerShell: {command: 'Remove-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Recurse -ErrorAction SilentlyContinue', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Removing hidden defaultuser0 account used during OOBE'}
   - !run: {exe: 'net', args: 'user defaultuser0 /delete', ignoreErrors: true}
