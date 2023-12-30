@@ -55,17 +55,14 @@ actions:
 
     # ======> Security
     # === UAC
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorAdmin', type: REG_DWORD, data: '5'}
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorUser', type: REG_DWORD, data: '3'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorAdmin', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorUser', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableInstallerDetection', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableLUA', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableVirtualization', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'PromptOnSecureDesktop', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ValidateAdminCodeSignatures', type: REG_DWORD, data: '0'}
   - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System', value: 'FilterAdministratorToken', type: REG_DWORD, data: '0'}
-
-    # Enable Admin account and downgrade user account
-  - !run: {exeDir: true, exe: 'ADMIN.bat'}
 
     # Blocks Anonymous Enumeration of SAM Accounts
     # https://www.stigviewer.com/stig/microsoft_windows_10/2022-04-08/finding/V-220929
