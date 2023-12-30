@@ -11,6 +11,17 @@ actions:
     command: 'winget install -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
+  - !writeStatus: {status: 'Installing 7-Zip'}
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    weight: 150
+  - !writeStatus: {status: 'Configuring 7-Zip'}
+  - !run:
+    exeDir: true
+    exe: '7ZIP.cmd'
+    weight: 20
+
   - !writeStatus: {status: 'Installing Scoop'}
   - !powerShell:
     runas: currentUser
@@ -99,6 +110,11 @@ actions:
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File VIRTIO.ps1'
+    weight: 150
+    option: 'install-guest-tools'
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install -e --id WinFsp.WinFsp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-guest-tools'
 
