@@ -163,4 +163,4 @@ actions:
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\DWM', value: 'AlwaysHibernateThumbnails', data: '0', type: REG_DWORD}
 
     # Disable Recycle Bin shortcut on Desktop
-  - !registryKey: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer\Desktop\NameSpace\{645FF040-5081-101B-9F08-00AA002F954E}'}
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum', value: '{645FF040-5081-101B-9F08-00AA002F954E}', data: '1', type: REG_DWORD}
