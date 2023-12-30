@@ -46,8 +46,8 @@ actions:
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\NamingTemplates', value: 'ShortcutNameTemplate', type: REG_SZ, data: '"%s.lnk"'}
     # === Disable News and Interests - On
   - !registryValue: {path: 'HKCU\Software\Microsoft\PolicyManager\default\NewsAndInterests\AllowNewsAndInterests', value: 'value', type: REG_DWORD, data: '0'}
-    # Enables full drive indexing (Enhanced Search)
-  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex', value: 'EnableFindMyFiles', type: REG_DWORD, data: '1'}
+    # Disables full drive indexing (Enhanced Search)
+  - !registryValue: {path: 'HKLM\SOFTWARE\Microsoft\Windows Search\Gather\Windows\SystemIndex', value: 'EnableFindMyFiles', type: REG_DWORD, data: '0'}
     # Revert to Classic Search
   - !registryValue: {path: 'HKLM\SOFTWARE\Classes\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
   - !registryValue: {path: 'HKLM\SOFTWARE\Classes\WOW6432Node\CLSID\{1d64637d-31e9-4b06-9124-e83fb178ac6e}\TreatAs', value: '', data: '{64bc32b5-4eec-4de7-972d-bd8bd0324537}', type: REG_SZ}
