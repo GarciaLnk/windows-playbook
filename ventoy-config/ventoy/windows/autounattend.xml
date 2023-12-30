@@ -67,7 +67,7 @@
 			<UserData>
 				<AcceptEula>true</AcceptEula>
 				<ProductKey>
-					<!-- <Key></Key> -->
+					<Key></Key>
 					<WillShowUI>Never</WillShowUI>
 				</ProductKey>
 			</UserData>
