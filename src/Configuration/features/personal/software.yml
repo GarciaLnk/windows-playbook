@@ -3,7 +3,8 @@ description: Installs preferred personal software
 privilege: TrustedInstaller
 actions:
   - !writeStatus: {status: 'Installing WinGet'}
-  - !powerShell: {command: '&([ScriptBlock]::Create((irm asheroto.com/winget))) -Force; winget settings --enable InstallerHashOverride', runas: currentUserElevated}
+  - !powerShell: {command: '&([ScriptBlock]::Create((irm asheroto.com/winget))) -Force', runas: currentUserElevated}
+  - !powerShell: {command: 'winget settings --enable InstallerHashOverride', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Installing Git'}
   - !cmd:
@@ -19,7 +20,8 @@ actions:
   - !writeStatus: {status: 'Configuring 7-Zip'}
   - !run:
     exeDir: true
-    exe: '7ZIP.cmd'
+    exe: 'CMD'
+    args: '/c 7ZIP.cmd'
     weight: 20
 
   - !writeStatus: {status: 'Installing Scoop'}
@@ -74,8 +76,8 @@ actions:
     weight: 150
     option: 'browser-firefox'
   - !writeStatus: {status: 'Configuring Firefox', option: 'browser-firefox'}
-  - !run: {exe: 'FIREFOX.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
-  - !run: {exe: 'TASKBARPINS.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
+  - !run: {exe: 'CMD', args: '/c FIREFOX.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
+  - !run: {exe: 'CMD', args: '/c TASKBARPINS.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
 
   - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
   - !cmd:

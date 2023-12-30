@@ -24,22 +24,25 @@ actions:
     args: '-NoP -ExecutionPolicy Bypass -File SVCGROUP.ps1'
     weight: 50
 
-  - !run: {exeDir: true, exe: "FINALIZE.cmd", weight: 200}
+  - !run: {exeDir: true, exe: "CMD", args: "/c FINALIZE.cmd", weight: 200}
 
   - !run:
     exeDir: true
-    exe: "STARTMENU.cmd"
+    exe: "CMD"
+    args: "/c STARTMENU.cmd"
     weight: 100
 
   - !run:
     exeDir: true
-    exe: "FILEASSOC.cmd"
+    exe: "CMD"
+    args: "/c FILEASSOC.cmd"
     option: "configure-lpv"
     weight: 150
 
   - !run:
     exeDir: true
-    exe: "WALLPAPER.cmd"
+    exe: "CMD"
+    args: "/c WALLPAPER.cmd"
     option: "configure-wallpaper"
     weight: 90
 

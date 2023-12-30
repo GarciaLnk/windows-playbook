@@ -7,7 +7,8 @@ actions:
   - !writeStatus: {status: "Removing system packages"}
   - !run: 
     exeDir: true
-    exe: 'CAB\cab-installer.cmd'
+    exe: 'CMD'
+    args: '/c CAB\cab-installer.cmd'
 
 
 # NOTE: This method of removing system packages is now deprecated and not recommended by Revision, as it is one of the main cause of #49
