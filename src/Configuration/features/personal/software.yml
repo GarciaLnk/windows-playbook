@@ -45,6 +45,10 @@ actions:
     runas: currentUserElevated
     command: 'winget install Microsoft.DotNet.Runtime.5 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.Runtime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 300
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install Microsoft.DotNet.DesktopRuntime.5 Microsoft.DotNet.DesktopRuntime.6 Microsoft.DotNet.DesktopRuntime.7 Microsoft.DotNet.DesktopRuntime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    weight: 300
 
   - !writeStatus: {status: 'Installing MSKLC'}
   - !cmd:
