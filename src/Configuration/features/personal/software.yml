@@ -108,15 +108,11 @@ actions:
     option: 'install-powertoys'
 
   - !writeStatus: {status: 'Installing QEMU guest tools', option: 'install-guest-tools'}
-  - !powerShell:
-    command: 'Invoke-WebRequest -Uri "https://www.spice-space.org/download/windows/spice-guest-tools/spice-guest-tools-latest.exe" -OutFile "$env:TEMP\spice.exe"; Start-Process -FilePath "$env:TEMP\spice.exe" -Args "/S"'
-    runas: system
-    weight: 75
-    option: 'install-guest-tools'
-  - !powerShell:
-    command: 'Invoke-WebRequest -Uri "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.240-1/virtio-win-gt-x64.msi" -OutFile "$env:TEMP\virtio.msi"; Start-Process "msiexec.exe" -ArgumentList "/i `"$env:TEMP\virtio.msi`" /qn /norestart ADDLOCAL=ALL"'
-    runas: system
-    weight: 75
+  - !run:
+    exeDir: true
+    exe: 'PowerShell'
+    args: '-NoP -ExecutionPolicy Bypass -File VIRTIO.ps1'
+    weight: 150
     option: 'install-guest-tools'
   - !cmd:
     runas: currentUserElevated
