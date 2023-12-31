@@ -164,3 +164,6 @@ actions:
 
     # Disable Recycle Bin shortcut on Desktop
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum', value: '{645FF040-5081-101B-9F08-00AA002F954E}', data: '1', type: REG_DWORD}
+
+    # Skip swipe screen in lock screen
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\Windows\Personalization', value: 'NoLockScreen', data: '1', type: REG_DWORD}
