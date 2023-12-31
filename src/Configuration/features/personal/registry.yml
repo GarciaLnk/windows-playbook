@@ -167,3 +167,12 @@ actions:
 
     # Skip swipe screen in lock screen
   - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\Windows\Personalization', value: 'NoLockScreen', data: '1', type: REG_DWORD}
+
+    # Configure BitLocker to only use PCR 11
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\FVE\OSPlatformValidation_UEFI', value: 'Enabled', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\FVE\OSPlatformValidation_UEFI', value: '0', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\FVE\OSPlatformValidation_UEFI', value: '2', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\FVE\OSPlatformValidation_UEFI', value: '4', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\FVE\OSPlatformValidation_UEFI', value: '7', data: '0', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\FVE\OSPlatformValidation_UEFI', value: '11', data: '1', type: REG_DWORD}
+  - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\FVE', value: 'OSAllowSecureBootForIntegrity', data: '0', type: REG_DWORD}
