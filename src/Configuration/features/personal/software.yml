@@ -113,6 +113,7 @@ actions:
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File VIRTIO.ps1'
     weight: 150
+    timeout: 60000
     option: 'install-guest-tools'
   - !cmd:
     runas: currentUserElevated
@@ -257,6 +258,7 @@ actions:
     runas: currentUserElevated
     command: 'scoop install games/battlenet'
     weight: 150
+    timeout: 60000
     option: 'install-battlenet'
 
   - !writeStatus: {status: 'Installing EA app', option: 'install-ea'}
@@ -285,6 +287,7 @@ actions:
     runas: currentUser
     command: 'winget install -e --id PokeMMO.PokeMMO --ignore-security-hash --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
+    timeout: 60000
     option: 'install-pokemmo'
 
   - !writeStatus: {status: 'Installing Discord', option: 'install-discord'}
