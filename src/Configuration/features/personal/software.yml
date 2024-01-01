@@ -182,6 +182,11 @@ actions:
     command: 'scoop install main/python'
     weight: 150
     option: 'install-python'
+  - !powerShell:
+    runas: currentUserElevated
+    command: 'reg import $HOME\scoop\apps\python\current\install-pep-514.reg'
+    weight: 20
+    option: 'install-python'
 
   - !writeStatus: {status: 'Installing Node.js', option: 'install-nodejs'}
   - !cmd:
