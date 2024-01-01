@@ -499,7 +499,7 @@ actions:
   - !writeStatus: {status: 'Installing mpv'}
   - !cmd:
     runas: currentUserElevated
-    command: 'choco install -y --no-progress --allow-empty-checksums mpv.install'
+    command: 'scoop install extras/mpv main/yt-dlp main/ffmpeg'
     weight: 150
 
   - !writeStatus: {status: 'Enabling NFS client', option: 'install-miscfeatures'}
