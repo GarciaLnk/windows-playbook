@@ -446,7 +446,7 @@ actions:
   - !writeStatus: {status: 'Installing Snappy Driver Installer Origin', option: 'install-sdio'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id GlennDelahoy.SnappyDriverInstallerOrigin --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'scoop install extras/snappy-driver-installer-origin'
     weight: 150
     option: 'install-sdio'
 
