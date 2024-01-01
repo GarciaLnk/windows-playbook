@@ -193,7 +193,7 @@ actions:
   - !writeStatus: {status: 'Installing Java JDK', option: 'install-java'}
   - !cmd:
     runas: currentUser
-    command: 'scoop bucket add java & scoop install java/graalvm21-jdk21'
+    command: 'scoop bucket add java & scoop install java/graalvm21-jdk11 & scoop install java/graalvm21-jdk17 & scoop install java/graalvm21-jdk21'
     weight: 150
     option: 'install-java'
 
