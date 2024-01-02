@@ -59,10 +59,12 @@ actions:
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ConsentPromptBehaviorUser', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableInstallerDetection', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableLUA', type: REG_DWORD, data: '1'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableSecureUIAPaths', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableVirtualization', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'PromptOnSecureDesktop', type: REG_DWORD, data: '1'}
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'ValidateAdminCodeSignatures', type: REG_DWORD, data: '0'}
   - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'FilterAdministratorToken', type: REG_DWORD, data: '0'}
+  - !registryValue: {path: 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System', value: 'EnableUIADesktopToggle', type: REG_DWORD, data: '0'}
 
     # === HVCI - Off
   - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\DeviceGuard', value: 'EnableVirtualizationBasedSecurity', data: '0', type: REG_DWORD}
@@ -206,3 +208,6 @@ actions:
 
     # Disable screen edge swipe
   - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\Windows\EdgeUI', value: 'AllowEdgeSwipe', data: '0', type: REG_DWORD}
+
+    # Enable windowed games optimizations
+  - !registryValue: {path: 'HKCU\Software\Microsoft\DirectX\UserGpuPreferences', value: 'DirectXUserGlobalSettings', data: 'SwapEffectUpgradeEnable=1;', type: REG_SZ}
