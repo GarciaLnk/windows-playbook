@@ -460,6 +460,13 @@ actions:
   - !service: {name: 'Razer Game Manager Service', operation: change, startup: 3, option: 'install-synapse'}
   - !service: {name: 'Razer Synapse Service', operation: change, startup: 3, option: 'install-synapse'}
 
+  - !writeStatus: {status: 'Installing 8BitDo Tools', option: 'install-8bitdo'}
+  - !cmd:
+    runas: currentUser
+    command: 'scoop bucket add Tremontaine_tre-bucket https://github.com/Tremontaine/tre-bucket & scoop install Tremontaine_tre-bucket/8bitdo-updater & scoop install Tremontaine_tre-bucket/8bitdo-ultimate-software'
+    weight: 150
+    option: 'install-8bitdo'
+
   - !writeStatus: {status: 'Installing MSI Afterburner', option: 'install-afterburner'}
   - !cmd:
     runas: currentUserElevated
