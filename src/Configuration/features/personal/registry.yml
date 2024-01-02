@@ -200,3 +200,6 @@ actions:
   - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\PushNotifications', value: 'ToastEnabled', data: '0', type: REG_DWORD}
   - !registryValue: {path: 'HKLM\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications', value: 'NoCloudApplicationNotification', data: '1', type: REG_DWORD}
   - !registryValue: {path: 'HKCU\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications', value: 'NoCloudApplicationNotification', data: '1', type: REG_DWORD}
+
+    # Disable Caps Lock
+  - !registryValue: {path: 'HKLM\System\CurrentControlSet\Control\Keyboard Layout', value: 'Scancode Map', data: '00000000000000000200000000003A0000000000', type: REG_BINARY}
