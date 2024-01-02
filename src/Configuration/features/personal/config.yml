@@ -15,3 +15,10 @@ actions:
 
   - !writeStatus: {status: 'Removing hidden defaultuser0 account used during OOBE'}
   - !run: {exe: 'net', args: 'user defaultuser0 /delete', ignoreErrors: true}
+
+  - !writeStatus: {status: 'Disabling Windows services'}
+  - !service: {name: 'lfsvc', operation: change, startup: 4}
+  - !service: {name: 'MapsBroker', operation: change, startup: 4}
+  - !service: {name: 'OneSyncSvc', operation: change, startup: 4}
+  - !service: {name: 'TrkWks', operation: change, startup: 4}
+  - !service: {name: 'WSearch', operation: change, startup: 4}
