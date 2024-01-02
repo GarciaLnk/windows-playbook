@@ -120,6 +120,7 @@ actions:
     command: 'winget install -e --id WinFsp.WinFsp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-guest-tools'
+  - !service: {name: 'VirtioFsSvc', operation: change, startup: 2, option: 'install-guest-tools'}
 
   - !writeStatus: {status: 'Installing Adobe Reader DC', option: 'install-adobereader'}
   - !cmd:
