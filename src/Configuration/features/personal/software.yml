@@ -96,7 +96,7 @@ actions:
   - !writeStatus: {status: 'Installing Visual Studio Code', option: 'install-vscode'}
   - !cmd:
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.VisualStudioCode --custom "!desktopicon" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install -e --id Microsoft.VisualStudioCode --custom "!desktopicon,!runcode,addcontextmenufiles,addcontextmenufolders" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-vscode'
 
