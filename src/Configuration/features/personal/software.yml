@@ -82,7 +82,7 @@ actions:
   - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
   - !cmd:
     runas: currentUserElevated
-    command: 'choco install -y --no-progress --allow-empty-checksums microsoft-office-deployment --params="/64bit /ProofingToolLanguage:en-us,es-es /Exclude:Publisher,OneDrive,Outlook,OneNote,Lync,Groove"'
+    command: 'winget install -e --id Microsoft.Office --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-office'
 
