@@ -423,6 +423,14 @@ actions:
     weight: 150
     option: 'install-wiztree'
 
+
+  - !writeStatus: {status: 'Installing BleachBit', option: 'install-bleachbit'}
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install -e --id BleachBit.BleachBit --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    weight: 150
+    option: 'install-bleachbit'
+
   - !writeStatus: {status: 'Installing NVIDIA graphics drivers', option: 'install-nvidia'}
   - !cmd:
     runas: currentUserElevated
