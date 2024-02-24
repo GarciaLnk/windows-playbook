@@ -2,9 +2,10 @@ title: Software (personal)
 description: Installs preferred personal software
 privilege: TrustedInstaller
 actions:
-  - !writeStatus: {status: 'Installing WinGet'}
-  - !powerShell: {command: '&([ScriptBlock]::Create((irm asheroto.com/winget))) -Force', runas: currentUserElevated}
-  - !powerShell: {command: 'winget settings --enable InstallerHashOverride', runas: currentUserElevated}
+  - !writeStatus: {status: 'Installing Chocolatey'}
+  - !powerShell:
+    command: "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+    weight: 50
 
   - !writeStatus: {status: 'Installing Git'}
   - !cmd:
@@ -36,9 +37,6 @@ actions:
     runas: currentUserElevated
     command: 'choco feature enable -n=useRememberedArgumentsForUpgrades'
     weight: 20
-
-  - !writeStatus: {status: 'Resetting MS Store'}
-  - !powerShell: {command: 'Get-CimInstance -Namespace "Root\cimv2\mdm\dmmap" -ClassName "MDM_EnterpriseModernAppManagement_AppManagement01" | Invoke-CimMethod -MethodName UpdateScanMethod', runas: currentUserElevated}
 
   - !writeStatus: {status: 'Installing Visual C++ Runtime'}
   - !cmd:
@@ -422,7 +420,6 @@ actions:
     command: 'winget install -e --id AntibodySoftware.WizTree --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-wiztree'
-
 
   - !writeStatus: {status: 'Installing BleachBit', option: 'install-bleachbit'}
   - !cmd:
