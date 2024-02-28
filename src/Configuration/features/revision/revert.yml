@@ -1,7 +1,8 @@
 ---
-title: Revert configurations
-description: Revert configurations that were from previous versions
+title: Rollback Tweaks
+description: Rollback tweaks for those who are applying from previous versions of the playbook
 privilege: TrustedInstaller
+option: apply-revert
 actions:
 
   - !registryValue: { path: 'HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU', value: 'NoAutoUpdate', type: REG_DWORD, data: '1' }
@@ -36,3 +37,12 @@ actions:
 
   # Breaks Efficiency Mode in Task Manager
   - !service: {name: 'bam', operation: change, startup: 1}
+
+  #  The Start Recording button on GameBar is gray outed - #74
+  - !registryValue: {path: 'HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR', value: 'AppCaptureEnabled', operation: delete}
+
+
+  # Revert services
+  - !service: {name: 'Beep', operation: change, startup: 1} 
+  - !service: {name: 'GraphicsPerfSvc', operation: change, startup: 3}
+  - !service: {name: 'Ndu', operation: change, startup: 2}
