@@ -13,6 +13,12 @@ actions:
     command: 'winget install -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
+  - !writeStatus: {status: 'Installing MSYS2'}
+  - !cmd:
+    runas: currentUserElevated
+    command: 'winget install -e --id MSYS2.MSYS2 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    weight: 150
+
   - !writeStatus: {status: 'Installing 7-Zip'}
   - !cmd:
     runas: currentUserElevated
