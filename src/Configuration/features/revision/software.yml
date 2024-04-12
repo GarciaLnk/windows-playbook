@@ -5,7 +5,7 @@ privilege: TrustedInstaller
 actions:
   - !writeStatus: {status: 'Installing Revision Tool'}
   - !powerShell: {command: "& { Invoke-WebRequest ((Invoke-RestMethod -Uri 'https://api.github.com/repos/meetrevision/revision-tool/releases/latest' -Method Get | ConvertTo-Json | ConvertFrom-Json).assets | where-object { $_.name -eq 'RevisionTool-Setup.exe' }).browser_download_url -OutFile \"$env:TEMP\\RevisionTool-Setup.exe\" }"}
-  - !cmd: {command: 'call "%temp%\RevisionTool-Setup.exe" /VERYSILENT', weight: 150}
+  - !cmd: {command: 'call "%temp%\RevisionTool-Setup.exe" /VERYSILENT', wait: true, weight: 150}
 
     # Not an ideal place to put this - Disable Defender
   - !writeStatus: {status: 'Disabling Windows Defender'}
@@ -16,6 +16,7 @@ actions:
   - !powerShell:
     weight: 50
     runas: currentUserElevated
+    wait: true
     command: |
       $productName = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion' -Name ProductName
       $path = Join-Path ${env:ProgramFiles(x86)} 'Revision Tool'
@@ -38,6 +39,7 @@ actions:
   - !cmd:
     command: 'winget install Brave.Brave --scope machine --silent --accept-source-agreements --accept-package-agreements'
     weight: 150
+    wait: true
     runas: currentUserElevated
     option: 'browser-brave'
 

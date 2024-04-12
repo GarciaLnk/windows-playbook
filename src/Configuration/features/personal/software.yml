@@ -4,28 +4,33 @@ privilege: TrustedInstaller
 actions:
   - !writeStatus: {status: 'Installing Chocolatey'}
   - !powerShell:
+    wait: true
     command: "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
     weight: 50
 
   - !writeStatus: {status: 'Installing Git'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing MSYS2'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id MSYS2.MSYS2 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing 7-Zip'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
   - !writeStatus: {status: 'Configuring 7-Zip'}
   - !run:
+    wait: true
     exeDir: true
     exe: 'CMD'
     args: '/c 7ZIP.cmd'
@@ -33,25 +38,29 @@ actions:
 
   - !writeStatus: {status: 'Installing Scoop'}
   - !powerShell:
+    wait: true
     runas: currentUser
     command: 'Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression'
-  - !cmd: {command: 'scoop bucket add games', runas: currentUser}
-  - !cmd: {command: 'scoop bucket add extras', runas: currentUser}
+  - !cmd: {command: 'scoop bucket add games', runas: currentUser, wait: true}
+  - !cmd: {command: 'scoop bucket add extras', runas: currentUser, wait: true}
 
   - !writeStatus: {status: 'Configuring Choco'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'choco feature enable -n=useRememberedArgumentsForUpgrades'
     weight: 20
 
   - !writeStatus: {status: 'Installing Visual C++ Runtime'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id abbodi1406.vcredist --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing legacy DirectX Runtime'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Microsoft.DirectX --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -59,32 +68,37 @@ actions:
   - !writeStatus: {status: 'Installing .NET Runtimes'}
   - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName NetFx3 -NoRestart -All'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install Microsoft.DotNet.Runtime.5 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.Runtime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 300
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install Microsoft.DotNet.DesktopRuntime.5 Microsoft.DotNet.DesktopRuntime.6 Microsoft.DotNet.DesktopRuntime.7 Microsoft.DotNet.DesktopRuntime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 300
 
   - !writeStatus: {status: 'Installing MSKLC'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install extras/msklc'
     weight: 150
 
   - !writeStatus: {status: 'Installing Firefox', option: 'browser-firefox'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Mozilla.Firefox --custom "/DesktopShortcut=false" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'browser-firefox'
   - !writeStatus: {status: 'Configuring Firefox', option: 'browser-firefox'}
-  - !run: {exe: 'CMD', args: '/c FIREFOX.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
-  - !run: {exe: 'CMD', args: '/c TASKBARPINS.cmd', exeDir: true, weight: 20, option: 'browser-firefox'}
+  - !run: {exe: 'CMD', args: '/c FIREFOX.cmd', exeDir: true, weight: 20, option: 'browser-firefox', wait: true}
+  - !run: {exe: 'CMD', args: '/c TASKBARPINS.cmd', exeDir: true, weight: 20, option: 'browser-firefox', wait: true}
 
   - !writeStatus: {status: 'Installing Microsoft Office', option: 'install-office'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Microsoft.Office --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -92,6 +106,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Visual Studio', option: 'install-visual-studio'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Microsoft.VisualStudio.2022.Enterprise --custom "--add Microsoft.VisualStudio.Workload.NativeDesktop" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -99,6 +114,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Visual Studio Code', option: 'install-vscode'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Microsoft.VisualStudioCode --custom "!desktopicon,!runcode,addcontextmenufiles,addcontextmenufolders" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -106,6 +122,7 @@ actions:
 
   - !writeStatus: {status: 'Installing PowerToys', option: 'install-powertoys'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Microsoft.PowerToys --custom "-silent" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -113,6 +130,7 @@ actions:
 
   - !writeStatus: {status: 'Installing QEMU guest tools', option: 'install-guest-tools'}
   - !run:
+    wait: true
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File VIRTIO.ps1'
@@ -120,6 +138,7 @@ actions:
     timeout: 60000
     option: 'install-guest-tools'
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id WinFsp.WinFsp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -128,6 +147,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Adobe Reader DC', option: 'install-adobereader'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums adobereader --params "AddDesktopIcon=0"'
     weight: 150
@@ -135,6 +155,7 @@ actions:
 
   - !writeStatus: {status: 'Installing KDE Connect', option: 'install-kdeconnect'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id KDE.KDEConnect --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -142,6 +163,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Equalizer APO', option: 'install-eqapo'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'scoop bucket add nonportable & scoop install nonportable/equalizer-apo-np'
     weight: 150
@@ -149,11 +171,13 @@ actions:
 
   - !writeStatus: {status: 'Installing Cloudflare Warp', option: 'install-warp'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Cloudflare.Warp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-warp'
   - !powerShell:
+    wait: true
     runas: currentUserElevated
     command: "Get-Process 'Cloudflare WARP' -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process 'Cloudflare WARP' -ea 0 | Stop-Process -Force"
     weight: 20
@@ -161,6 +185,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Tailscale', option: 'install-tailscale'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id tailscale.tailscale --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -168,6 +193,7 @@ actions:
 
   - !writeStatus: {status: 'Installing qBittorrent', option: 'install-qbittorrent'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id qBittorrent.qBittorrent --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -175,6 +201,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Parsec', option: 'install-parsec'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Parsec.Parsec --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -183,11 +210,13 @@ actions:
 
   - !writeStatus: {status: 'Installing Python', option: 'install-python'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install main/python'
     weight: 150
     option: 'install-python'
   - !powerShell:
+    wait: true
     runas: currentUserElevated
     command: 'reg import $HOME\scoop\apps\python\current\install-pep-514.reg'
     weight: 20
@@ -195,6 +224,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Node.js', option: 'install-nodejs'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install main/nodejs'
     weight: 150
@@ -202,6 +232,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Java JDK', option: 'install-java'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop bucket add java & scoop install java/graalvm21-jdk11 & scoop install java/graalvm21-jdk17 & scoop install java/graalvm21-jdk21'
     weight: 150
@@ -209,6 +240,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Go', option: 'install-go'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install main/go'
     weight: 150
@@ -216,6 +248,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Yuzu', option: 'install-yuzu'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install games/yuzu-pineapple'
     weight: 150
@@ -223,6 +256,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Cemu', option: 'install-cemu'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install games/cemu-dev'
     weight: 150
@@ -230,6 +264,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Citra', option: 'install-citra'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install games/citra'
     weight: 150
@@ -237,6 +272,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Dolphin', option: 'install-dolphin'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop install games/dolphin-beta'
     weight: 150
@@ -244,6 +280,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Steam', option: 'install-steam'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Valve.Steam --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -251,6 +288,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Epic Games Launcher', option: 'install-epicgames'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id EpicGames.EpicGamesLauncher --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -258,6 +296,7 @@ actions:
 
   - !writeStatus: {status: 'Installing GOG Galaxy', option: 'install-gog'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id GOG.Galaxy --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -265,6 +304,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Battle.net', option: 'install-battlenet'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'scoop install games/battlenet'
     weight: 150
@@ -273,6 +313,7 @@ actions:
 
   - !writeStatus: {status: 'Installing EA app', option: 'install-ea'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id ElectronicArts.EADesktop --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -280,6 +321,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Ubisoft Connect', option: 'install-ubisoft'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Ubisoft.Connect --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -287,6 +329,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Prism Launcher', option: 'install-prism'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id PrismLauncher.PrismLauncher --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -294,6 +337,7 @@ actions:
 
   - !writeStatus: {status: 'Installing PokeMMO', option: 'install-pokemmo'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'winget install -e --id PokeMMO.PokeMMO --ignore-security-hash --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -302,11 +346,13 @@ actions:
 
   - !writeStatus: {status: 'Installing Discord', option: 'install-discord'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Discord.Discord --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-discord'
   - !powerShell:
+    wait: true
     runas: currentUserElevated
     command: 'Get-Process Discord -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process Discord -ea 0 | Stop-Process -Force'
     weight: 20
@@ -314,6 +360,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Zoom', option: 'install-zoom'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Zoom.Zoom --custom "zNoDesktopShortCut=True" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -321,6 +368,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Teams', option: 'install-teams'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Microsoft.Teams.Classic --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -328,6 +376,7 @@ actions:
 
   - !writeStatus: {status: 'Installing OBS', option: 'install-obs'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id OBSProject.OBSStudio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -335,11 +384,13 @@ actions:
 
   - !writeStatus: {status: 'Installing HWiNFO', option: 'install-hwinfo'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id REALiX.HWiNFO --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-hwinfo'
   - !powerShell:
+    wait: true
     runas: currentUserElevated
     command: 'Get-Process HWiNFO64 -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process HWiNFO64 -ea 0 | Stop-Process -Force'
     weight: 20
@@ -347,6 +398,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Furmark', option: 'install-furmark'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums furmark'
     weight: 150
@@ -354,6 +406,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Cinebench', option: 'install-cinebench'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Maxon.CinebenchR23 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -361,6 +414,7 @@ actions:
 
   - !writeStatus: {status: 'Installing LatencyMon', option: 'install-latencymon'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Resplendence.LatencyMon --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -368,11 +422,13 @@ actions:
 
   - !writeStatus: {status: 'Installing ShareX', option: 'install-sharex'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id ShareX.ShareX --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-sharex'
   - !powerShell:
+    wait: true
     runas: currentUserElevated
     command: 'Get-Process ShareX -ea 0 | ForEach-Object { $_.CloseMainWindow() | Out-Null }; Start-Sleep 1; Get-Process ShareX -ea 0 | Stop-Process -Force'
     weight: 20
@@ -380,6 +436,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Meld', option: 'install-meld'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Meld.Meld --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -387,6 +444,7 @@ actions:
 
   - !writeStatus: {status: 'Installing HxD', option: 'install-hxd'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id MHNexus.HxD --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -394,6 +452,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Stremio', option: 'install-stremio'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Stremio.Stremio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -401,6 +460,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Pympress', option: 'install-pympress'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Cimbali.pympress --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -408,6 +468,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Fedora Media Writer', option: 'install-fedorawriter'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Fedora.FedoraMediaWriter --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -415,6 +476,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Fedora Butane', option: 'install-fedorabutane'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Fedora.CoreOS.butane --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -422,6 +484,7 @@ actions:
 
   - !writeStatus: {status: 'Installing WizTree', option: 'install-wiztree'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id AntibodySoftware.WizTree --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -429,6 +492,7 @@ actions:
 
   - !writeStatus: {status: 'Installing BleachBit', option: 'install-bleachbit'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id BleachBit.BleachBit --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -436,6 +500,7 @@ actions:
 
   - !writeStatus: {status: 'Installing NVIDIA graphics drivers', option: 'install-nvidia'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id TechPowerUp.NVCleanstall --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -443,6 +508,7 @@ actions:
 
   - !writeStatus: {status: 'Installing AMD Ryzen drivers', option: 'install-ryzen'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums amd-ryzen-chipset'
     weight: 150
@@ -450,6 +516,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Intel wireless drivers', option: 'install-intelwireless'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums intel-proset-drivers intel-bluetooth-drivers'
     weight: 150
@@ -457,6 +524,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Snappy Driver Installer Origin', option: 'install-sdio'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'scoop install extras/snappy-driver-installer-origin'
     weight: 150
@@ -464,6 +532,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Razer Synapse', option: 'install-synapse'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums razer-synapse-3'
     weight: 150
@@ -474,6 +543,7 @@ actions:
 
   - !writeStatus: {status: 'Installing 8BitDo Tools', option: 'install-8bitdo'}
   - !cmd:
+    wait: true
     runas: currentUser
     command: 'scoop bucket add Tremontaine_tre-bucket https://github.com/Tremontaine/tre-bucket & scoop install Tremontaine_tre-bucket/8bitdo-updater & scoop install Tremontaine_tre-bucket/8bitdo-ultimate-software'
     weight: 150
@@ -481,6 +551,7 @@ actions:
 
   - !writeStatus: {status: 'Installing MSI Afterburner', option: 'install-afterburner'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Guru3D.Afterburner --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -488,6 +559,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Universal x86 Tuning Utility', option: 'install-uxtu'}
   - !run:
+    wait: true
     exeDir: true
     exe: 'PowerShell'
     args: '-NoP -ExecutionPolicy Bypass -File UXTU.ps1'
@@ -496,6 +568,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Realtek PCIe Ethernet driver', option: 'install-realtekethernet'}
   - !run:
+    wait: true
     exeDir: true
     exe: 'RealtekPCIeEthernetDriver.exe'
     args: '-s -SMS'
@@ -504,12 +577,14 @@ actions:
 
   - !writeStatus: {status: 'Installing Notepad3', option: 'install-notepad'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Rizonesoft.Notepad3 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-notepad'
   - !writeStatus: {status: 'Configuring Notepad3', option: 'install-notepad'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'choco install -y --no-progress --allow-empty-checksums notepadreplacer --params="/NOTEPAD:C:\Program Files\Notepad3\Notepad3.exe"'
     weight: 20
@@ -517,25 +592,27 @@ actions:
 
   - !writeStatus: {status: 'Installing mpv'}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'scoop install extras/mpv main/yt-dlp main/ffmpeg'
     weight: 150
 
   - !writeStatus: {status: 'Enabling NFS client', option: 'install-miscfeatures'}
-  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName ServicesForNFS-ClientOnly -NoRestart -All', option: 'install-miscfeatures'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName ServicesForNFS-ClientOnly -NoRestart -All', option: 'install-miscfeatures', wait: true}
 
   - !writeStatus: {status: 'Enabling SSH client', option: 'install-miscfeatures'}
-  - !powerShell: {command: 'Add-WindowsCapability -Online -Name OpenSSH.Client', option: 'install-miscfeatures'}
+  - !powerShell: {command: 'Add-WindowsCapability -Online -Name OpenSSH.Client', option: 'install-miscfeatures', wait: true}
 
   - !writeStatus: {status: 'Enabling Windows Sandbox', option: 'install-miscfeatures'}
-  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -NoRestart -All', option: 'install-miscfeatures'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Containers-DisposableClientVM -NoRestart -All', option: 'install-miscfeatures', wait: true}
 
   - !writeStatus: {status: 'Enabling Virtual Machine Platform'}
-  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart -All'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform -NoRestart -All', wait: true}
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Linux', option: 'install-wsl'}
-  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart -All', option: 'install-wsl'}
+  - !powerShell: {command: 'Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart -All', option: 'install-wsl', wait: true}
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id Canonical.Ubuntu.2204 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
@@ -543,6 +620,7 @@ actions:
 
   - !writeStatus: {status: 'Installing Windows Subsystem for Android', option: 'install-wsa'}
   - !run:
+    wait: true
     runas: currentUser
     exeDir: true
     exe: 'PowerShell'
@@ -550,11 +628,13 @@ actions:
     weight: 300
     option: 'install-wsa'
   - !powerShell:
+    wait: true
     command: 'Push-Location -Path "$env:USERPROFILE\Documents\WSA"; & PowerShell -NoP -ExecutionPolicy Bypass -File "Install.ps1"'
     runas: currentUserElevated
     timeout: 10000
     option: 'install-wsa'
   - !cmd:
+    wait: true
     runas: currentUserElevated
     command: 'winget install -e --id alesimula.wsa_pacman --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
