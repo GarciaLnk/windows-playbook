@@ -12,21 +12,21 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Git.Git --custom "/o:PathOption=CmdTools/o:BashTerminalOption=ConHost/o:CRLFOption=CRLFCommitAsIs" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing MSYS2'}
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id MSYS2.MSYS2 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id MSYS2.MSYS2 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing 7-Zip'}
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id 7zip.7zip --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
   - !writeStatus: {status: 'Configuring 7-Zip'}
   - !run:
@@ -55,14 +55,14 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id abbodi1406.vcredist --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id abbodi1406.vcredist --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing legacy DirectX Runtime'}
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.DirectX --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Microsoft.DirectX --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
 
   - !writeStatus: {status: 'Installing .NET Runtimes'}
@@ -70,12 +70,12 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install Microsoft.DotNet.Runtime.5 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.Runtime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget Microsoft.DotNet.Runtime.5 Microsoft.DotNet.Runtime.6 Microsoft.DotNet.Runtime.7 Microsoft.DotNet.Runtime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 300
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install Microsoft.DotNet.DesktopRuntime.5 Microsoft.DotNet.DesktopRuntime.6 Microsoft.DotNet.DesktopRuntime.7 Microsoft.DotNet.DesktopRuntime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget Microsoft.DotNet.DesktopRuntime.5 Microsoft.DotNet.DesktopRuntime.6 Microsoft.DotNet.DesktopRuntime.7 Microsoft.DotNet.DesktopRuntime.8 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 300
 
   - !writeStatus: {status: 'Installing MSKLC'}
@@ -89,7 +89,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Mozilla.Firefox --custom "/DesktopShortcut=false" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Mozilla.Firefox --custom "/DesktopShortcut=false" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'browser-firefox'
   - !writeStatus: {status: 'Configuring Firefox', option: 'browser-firefox'}
@@ -100,7 +100,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.Office --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Microsoft.Office --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-office'
 
@@ -108,7 +108,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.VisualStudio.2022.Enterprise --custom "--add Microsoft.VisualStudio.Workload.NativeDesktop" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Microsoft.VisualStudio.2022.Enterprise --custom "--add Microsoft.VisualStudio.Workload.NativeDesktop" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-visual-studio'
 
@@ -116,7 +116,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.VisualStudioCode --custom "!desktopicon,!runcode,addcontextmenufiles,addcontextmenufolders" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Microsoft.VisualStudioCode --custom "!desktopicon,!runcode,addcontextmenufiles,addcontextmenufolders" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-vscode'
 
@@ -124,7 +124,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.PowerToys --custom "-silent" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Microsoft.PowerToys --custom "-silent" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-powertoys'
 
@@ -140,7 +140,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id WinFsp.WinFsp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id WinFsp.WinFsp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-guest-tools'
   - !service: {name: 'VirtioFsSvc', operation: change, startup: 2, option: 'install-guest-tools'}
@@ -157,7 +157,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id KDE.KDEConnect --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id KDE.KDEConnect --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-kdeconnect'
 
@@ -173,7 +173,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Cloudflare.Warp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Cloudflare.Warp --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-warp'
   - !powerShell:
@@ -187,7 +187,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id tailscale.tailscale --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id tailscale.tailscale --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-tailscale'
 
@@ -195,7 +195,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id qBittorrent.qBittorrent --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id qBittorrent.qBittorrent --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-qbittorrent'
 
@@ -203,7 +203,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Parsec.Parsec --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Parsec.Parsec --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-parsec'
   - !service: {name: 'Parsec', operation: change, startup: 3, option: 'install-parsec'}
@@ -282,7 +282,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Valve.Steam --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Valve.Steam --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-steam'
 
@@ -290,7 +290,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id EpicGames.EpicGamesLauncher --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id EpicGames.EpicGamesLauncher --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-epicgames'
 
@@ -298,7 +298,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id GOG.Galaxy --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id GOG.Galaxy --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-gog'
 
@@ -315,7 +315,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id ElectronicArts.EADesktop --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id ElectronicArts.EADesktop --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-ea'
 
@@ -323,7 +323,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Ubisoft.Connect --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Ubisoft.Connect --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-ubisoft'
 
@@ -331,7 +331,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id PrismLauncher.PrismLauncher --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id PrismLauncher.PrismLauncher --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-prism'
 
@@ -339,7 +339,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUser
-    command: 'winget install -e --id PokeMMO.PokeMMO --ignore-security-hash --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id PokeMMO.PokeMMO --ignore-security-hash --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     timeout: 60000
     option: 'install-pokemmo'
@@ -348,7 +348,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Discord.Discord --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Discord.Discord --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-discord'
   - !powerShell:
@@ -362,7 +362,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Zoom.Zoom --custom "zNoDesktopShortCut=True" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Zoom.Zoom --custom "zNoDesktopShortCut=True" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-zoom'
 
@@ -370,7 +370,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Microsoft.Teams.Classic --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Microsoft.Teams.Classic --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-teams'
 
@@ -378,7 +378,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id OBSProject.OBSStudio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id OBSProject.OBSStudio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-obs'
 
@@ -386,7 +386,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id REALiX.HWiNFO --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id REALiX.HWiNFO --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-hwinfo'
   - !powerShell:
@@ -408,7 +408,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Maxon.CinebenchR23 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Maxon.CinebenchR23 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-cinebench'
 
@@ -416,7 +416,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Resplendence.LatencyMon --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Resplendence.LatencyMon --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-latencymon'
 
@@ -424,7 +424,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id ShareX.ShareX --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id ShareX.ShareX --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-sharex'
   - !powerShell:
@@ -438,7 +438,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Meld.Meld --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Meld.Meld --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-meld'
 
@@ -446,7 +446,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id MHNexus.HxD --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id MHNexus.HxD --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-hxd'
 
@@ -454,7 +454,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Stremio.Stremio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Stremio.Stremio --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-stremio'
 
@@ -462,7 +462,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Cimbali.pympress --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Cimbali.pympress --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-pympress'
 
@@ -470,7 +470,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Fedora.FedoraMediaWriter --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Fedora.FedoraMediaWriter --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-fedorawriter'
 
@@ -478,7 +478,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Fedora.CoreOS.butane --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Fedora.CoreOS.butane --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-fedorabutane'
 
@@ -486,7 +486,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id AntibodySoftware.WizTree --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id AntibodySoftware.WizTree --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-wiztree'
 
@@ -494,7 +494,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id BleachBit.BleachBit --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id BleachBit.BleachBit --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-bleachbit'
 
@@ -502,7 +502,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id TechPowerUp.NVCleanstall --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id TechPowerUp.NVCleanstall --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-nvidia'
 
@@ -553,7 +553,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Guru3D.Afterburner --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Guru3D.Afterburner --custom "AddDesktopIcon=0" --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-afterburner'
 
@@ -579,7 +579,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Rizonesoft.Notepad3 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Rizonesoft.Notepad3 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-notepad'
   - !writeStatus: {status: 'Configuring Notepad3', option: 'install-notepad'}
@@ -614,7 +614,7 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id Canonical.Ubuntu.2204 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id Canonical.Ubuntu.2204 --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-wsl'
 
@@ -636,6 +636,6 @@ actions:
   - !cmd:
     wait: true
     runas: currentUserElevated
-    command: 'winget install -e --id alesimula.wsa_pacman --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
+    command: 'winget install --source winget -e --id alesimula.wsa_pacman --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
     weight: 150
     option: 'install-wsa'
