@@ -246,14 +246,6 @@ actions:
     weight: 150
     option: 'install-go'
 
-  - !writeStatus: {status: 'Installing Yuzu', option: 'install-yuzu'}
-  - !cmd:
-    wait: true
-    runas: currentUser
-    command: 'scoop install games/yuzu-pineapple'
-    weight: 150
-    option: 'install-yuzu'
-
   - !writeStatus: {status: 'Installing Cemu', option: 'install-cemu'}
   - !cmd:
     wait: true
@@ -474,14 +466,6 @@ actions:
     weight: 150
     option: 'install-fedorawriter'
 
-  - !writeStatus: {status: 'Installing Fedora Butane', option: 'install-fedorabutane'}
-  - !cmd:
-    wait: true
-    runas: currentUserElevated
-    command: 'winget install --source winget -e --id Fedora.CoreOS.butane --accept-package-agreements --accept-source-agreements --disable-interactivity --force -h'
-    weight: 150
-    option: 'install-fedorabutane'
-
   - !writeStatus: {status: 'Installing WizTree', option: 'install-wiztree'}
   - !cmd:
     wait: true
@@ -529,17 +513,6 @@ actions:
     command: 'scoop install extras/snappy-driver-installer-origin'
     weight: 150
     option: 'install-sdio'
-
-  - !writeStatus: {status: 'Installing Razer Synapse', option: 'install-synapse'}
-  - !cmd:
-    wait: true
-    runas: currentUserElevated
-    command: 'choco install -y --no-progress --allow-empty-checksums razer-synapse-3'
-    weight: 150
-    option: 'install-synapse'
-  - !service: {name: 'RzActionSvc', operation: change, startup: 3, option: 'install-synapse'}
-  - !service: {name: 'Razer Game Manager Service', operation: change, startup: 3, option: 'install-synapse'}
-  - !service: {name: 'Razer Synapse Service', operation: change, startup: 3, option: 'install-synapse'}
 
   - !writeStatus: {status: 'Installing 8BitDo Tools', option: 'install-8bitdo'}
   - !cmd:
