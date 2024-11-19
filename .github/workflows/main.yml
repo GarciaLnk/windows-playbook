@@ -18,17 +18,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Update version
-        run: |
-          $version = "${{ github.ref_name }}"
-          $playbookConfPath = "src\playbook.conf"
-          $finalizeCMDPath = "src\Executables\FINALIZE.cmd"
-
-          (Get-Content -Path $playbookConfPath) -replace '<Version>.*</Version>', "<Version>$version</Version>" | Set-Content -Path $playbookConfPath
-
-          (Get-Content -Path $finalizeCMDPath) -replace 'set version=.+', "set version=$version" | Set-Content -Path $finalizeCMDPath
-        shell: pwsh
-        
       - name: Archive content
         run: |
           7z a -pmalte -mhe=on ${{ env.FILENAME }} ./src/*
