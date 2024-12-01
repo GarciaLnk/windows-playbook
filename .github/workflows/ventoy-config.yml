@@ -1,10 +1,8 @@
 name: Archive and Release Ventoy Config
 
 on:
+  # Allow manual triggering
   workflow_dispatch:
-  release:
-    types:
-      - created
 
 jobs:
   build:
@@ -12,7 +10,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          ref: 'main'
+
+      - name: Set version
+        id: set_version
+        run: |
+          # Get current date in "YY.MM" format
+          CURRENT_DATE=$(date +%y.%m)
+          echo "VERSION=${CURRENT_DATE}" >> $GITHUB_ENV
+        shell: bash
 
       - name: Archive content
         run: |
@@ -24,7 +32,7 @@ jobs:
         with:
           file: ventoy-config.zip
           asset_name: ventoy-config.zip
-          tag: ${{ github.ref }}-ventoy-config
+          tag: ${{ env.VERSION }}-ventoy-config
           release_name: Ventoy Config
           prerelease: true
           overwrite: true
